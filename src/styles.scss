@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+/* Tailwind first */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@font-face {
+    font-family: 'Azonix';
+    src: url('assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'SinkinSans';
+    src: url('assets/fonts/SinkinSans-500Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    /* supports all weights */
+    font-stretch: 75% 100%;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Splash screen styles */
+#splash-screen {
+    position: fixed;
+    inset: 0;
+    background: #2F2F2F;
+    /* or your theme color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.splash-logo {
+    width: 120px;
+    height: auto;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.splash-loader {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #ccc;
+    border-top-color: #007bff;
+    /* main accent color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.custom-sales-dialog.p-dialog {
+    border: 1px solid #4f4f55;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #3b3b3f;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+}
+
+.custom-sales-dialog .p-dialog-header {
+    padding: 1.35rem 1.4rem 0.85rem;
+    border: 0;
+    background: #3b3b3f;
+    color: #ff9933;
+}
+
+.custom-sales-dialog .p-dialog-title {
+    color: #ff9933;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 900;
+}
+
+.custom-sales-dialog .p-dialog-header-icon {
+    color: #8fa0b5;
+}
+
+.custom-sales-dialog .p-dialog-header-icon:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f3dec6;
+}
+
+.custom-sales-dialog .p-dialog-content {
+    padding: 0.4rem 1.4rem 1.4rem;
+    background: #3b3b3f;
+    color: #f3dec6;
+}
+
+.custom-sales-dialog .custom-input,
+.custom-sales-dialog .p-inputtext {
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid #75757c;
+    border-radius: 9px;
+    background: rgba(20, 20, 23, 0.22);
+    color: #f3dec6;
+    box-shadow: none;
+}
+
+.custom-sales-dialog .custom-input:focus,
+.custom-sales-dialog .p-inputtext:enabled:focus {
+    border-color: #ff9933;
+    box-shadow: 0 0 0 1px rgba(255, 153, 51, 0.2);
+}
+
+.custom-sales-dialog .p-inputnumber,
+.custom-sales-dialog .p-datepicker {
+    width: 100%;
+}
+
+.custom-sales-dialog .p-datepicker-dropdown {
+    border-color: #75757c;
+    background: #f3f6fb;
+    color: #2f2f2f;
+}

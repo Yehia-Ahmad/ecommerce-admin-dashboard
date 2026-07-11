@@ -1,0 +1,8 @@
+{
+  "name": "ecommerce-admin-dashboard-desktop",
+  "version": "0.0.0",
+  "description": "Ecommerce Admin Dashboard desktop app",
+  "author": "Ecommerce Admin Dashboard",
+  "main": "electron/main.js",
+  "private": true
+}
