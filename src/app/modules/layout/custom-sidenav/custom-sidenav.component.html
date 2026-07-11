@@ -11,7 +11,7 @@
           [style.margin-bottom]="'1rem'"
           [style.padding]="'0.5rem'"
           [style.background-color]="rla.isActive ? '#FF9933' : '#FFDFC2'"
-          (click)="item.children ? toggleCategory(item.label) : null"
+          (click)="item.children || item.showCategoryTools ? toggleCategory(item.label) : null"
           [style.color]="'#2F2F2F'"
           [routerLink]="item.route"
           routerLinkActive
@@ -22,29 +22,6 @@
         </a>
       }
 
-      @if (hasProducts()) {
-        <button
-          mat-list-item
-          (click)="exportProductsExcel()"
-          [disabled]="isExportingProducts()"
-          [style.width]="'75%'"
-          [style.border-radius]="'8px'"
-          [style.margin]="'0 auto'"
-          [style.margin-bottom]="'1rem'"
-          [style.padding]="'0.5rem'"
-          [style.background-color]="'#FFDFC2'"
-          [style.color]="'#2F2F2F'"
-        >
-          <span matListItemIcon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-          </span>
-        </button>
-      }
     } @else {
       @for (item of menuItems(); track $index) {
         <div>
@@ -55,7 +32,7 @@
             routerLinkActive
             #rla="routerLinkActive"
             [activated]="rla.isActive"
-            (click)="item.children ? toggleCategory(item.label) : null"
+            (click)="item.children || item.showCategoryTools ? toggleCategory(item.label) : null"
             [style.width]="'90%'"
             [style.background-color]="rla.isActive ? '#FF9933' : '#FFDFC2'"
             [style.color]="'#2F2F2F'"
@@ -74,6 +51,24 @@
               {{ item.label | translate }}
             </span>
             @if (item.children) {
+              <span class="ml-auto">
+                <svg
+                  [style.transform]="expandedCategory === item.label ? 'rotate(180deg)' : 'rotate(0deg)'"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#FF9933"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-chevron-down transition-transform duration-200"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            }
+            @if (item.showCategoryTools) {
               <span class="ml-auto">
                 <svg
                   [style.transform]="expandedCategory === item.label ? 'rotate(180deg)' : 'rotate(0deg)'"
@@ -164,6 +159,11 @@
                 + {{ 'sidebarTitles.add_new_category' | translate }}
               </button>
 
+            </div>
+          }
+
+          @if (item.showCategoryTools && expandedCategory === item.label) {
+            <div class="mt-2" [style.margin-inline-start]="'1rem'" [style.margin-inline-end]="'1rem'">
               <div class="category-transfer-actions" [ngClass]="{
                 'category-transfer-actions--dark': isDarkMode$ | async,
                 'category-transfer-actions--light': !(isDarkMode$ | async)
@@ -189,7 +189,7 @@
                 </button>
 
                 <input
-                  #categoryImportInput
+                  #reportCategoryImportInput
                   type="file"
                   class="hidden"
                   accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
@@ -199,7 +199,7 @@
                   mat-stroked-button
                   type="button"
                   class="category-transfer-button"
-                  (click)="categoryImportInput.click()"
+                  (click)="reportCategoryImportInput.click()"
                   [disabled]="isImportingCategories()"
                 >
                   @if (isImportingCategories()) {
@@ -232,38 +232,6 @@
             </div>
           }
         </div>
-      }
-
-      @if (hasProducts()) {
-        <button
-          mat-list-item
-          (click)="exportProductsExcel()"
-          [disabled]="isExportingProducts()"
-          [style.width]="'90%'"
-          [style.background-color]="'#FFDFC2'"
-          [style.color]="'#2F2F2F'"
-          [style.margin]="'1rem'"
-          [style.border-radius]="'8px'"
-          [style.display]="'flex'"
-          [style.align-items]="'center'"
-        >
-          <span matListItemIcon>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-          </span>
-          <span
-            matListItemTitle
-            [style.margin-inline-start]="'0.5rem'"
-            [style.font-weight]="'600'"
-            [style.font-size]="'longer'"
-          >
-            {{ (isExportingProducts() ? 'actions.loading' : 'sidebarTitles.export_products') | translate }}
-          </span>
-        </button>
       }
     }
   </div>

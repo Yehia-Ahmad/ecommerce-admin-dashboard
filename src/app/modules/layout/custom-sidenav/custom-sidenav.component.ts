@@ -26,6 +26,7 @@ export type MenuItem = {
   icon: SafeHtml;
   route?: string;
   children?: { label: string; route: string; id: string; category?: any }[];
+  showCategoryTools?: boolean;
 }
 
 @Component({
@@ -125,6 +126,16 @@ export class CustomSidenavComponent implements OnInit {
 
   private sanitize(svg: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(svg);
+  }
+
+  private navIcon(path: string): SafeHtml {
+    return this.sanitize(`
+      <span class="block w-8 h-8">
+        <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="${path}" style="fill:#2f2f2f;fill-rule:nonzero;" />
+        </svg>
+      </span>
+    `);
   }
 
   getAllCategories() {
@@ -278,8 +289,32 @@ export class CustomSidenavComponent implements OnInit {
   }
 
   buildAdminMenuItems() {
-    if (this.isProductsContext()) {
-      this.menuItems.set(this.getProductsMenuItems());
+    const homeSection = this.getHomeSection();
+    const routeSection = this.getRouteSection();
+    const activeSection = routeSection ?? homeSection;
+
+    if (activeSection === 'inventory') {
+      this.menuItems.set(this.getInventoryMenuItems());
+      return;
+    }
+
+    if (activeSection === 'selling') {
+      this.menuItems.set(this.getSellingMenuItems());
+      return;
+    }
+
+    if (activeSection === 'selling-history') {
+      this.menuItems.set(this.getSellingHistoryMenuItems());
+      return;
+    }
+
+    if (activeSection === 'website-settings') {
+      this.menuItems.set(this.getWebsiteSettingsMenuItems());
+      return;
+    }
+
+    if (activeSection === 'reports') {
+      this.menuItems.set(this.getReportsMenuItems());
       return;
     }
 
@@ -333,6 +368,122 @@ export class CustomSidenavComponent implements OnInit {
         children: this.categories,
       }
     ]);
+  }
+
+  private getHomeSection(): string | null {
+    if (!this.isBrowser) return null;
+    return localStorage.getItem(HOME_VIEW_STORAGE_KEY);
+  }
+
+  private getRouteSection(): string | null {
+    if (this.isInventoryRoute()) return 'inventory';
+    if (this.isSellingRoute()) return 'selling';
+    if (this.isSellingHistoryRoute()) return 'selling-history';
+    if (this.isWebsiteSettingsRoute()) return 'website-settings';
+    if (this.isReportsRoute()) return 'reports';
+    return null;
+  }
+
+  private isInventoryRoute(): boolean {
+    return this._router.url.includes('/categories') || this._router.url.includes('/customers');
+  }
+
+  private isSellingRoute(): boolean {
+    return this._router.url.includes('/selling')
+      || this._router.url.includes('/credit-sales')
+      || this._router.url.includes('/website-orders');
+  }
+
+  private isSellingHistoryRoute(): boolean {
+    return this._router.url.includes('/invoice-history') || this._router.url.includes('/returns');
+  }
+
+  private isWebsiteSettingsRoute(): boolean {
+    return this._router.url.includes('/ecommerce-settings') || this._router.url.includes('/website-images');
+  }
+
+  private isReportsRoute(): boolean {
+    return this._router.url.includes('/products/profit-report');
+  }
+
+  private getInventoryMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'sidebarTitles.categories',
+        icon: this.navIcon('M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z'),
+        children: this.categories,
+      },
+      {
+        label: 'sidebarTitles.customers',
+        icon: this.navIcon('M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-8 1.67-8 5v1h16v-1c0-3.33-4.69-5-8-5z'),
+        route: '/customers'
+      }
+    ];
+  }
+
+  private getSellingMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'sidebarTitles.selling',
+        icon: this.navIcon('M7 4h10l1 4H6l1-4zm-1 6h12v10H6V10zm3 2v2h6v-2H9z'),
+        route: '/selling'
+      },
+      {
+        label: 'sidebarTitles.credit_sales',
+        icon: this.navIcon('M3 6h18v12H3V6zm2 2v8h14V8H5zm2 2h5v2H7v-2zm0 3h8v2H7v-2z'),
+        route: '/credit-sales'
+      },
+      {
+        label: 'sidebarTitles.website_orders',
+        icon: this.navIcon('M7 4h10l2 5v11H5V9l2-5zm1.2 2-1 3h9.6l-1-3H8.2zM8 12h8v2H8v-2z'),
+        route: '/website-orders'
+      }
+    ];
+  }
+
+  private getSellingHistoryMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'sidebarTitles.invoice_history',
+        icon: this.navIcon('M6 2h12v20l-3-2-3 2-3-2-3 2V2zm3 6h6V6H9v2zm0 4h6v-2H9v2zm0 4h4v-2H9v2z'),
+        route: '/invoice-history'
+      },
+      {
+        label: 'sidebarTitles.returns',
+        icon: this.navIcon('M7 7h10V4l5 5-5 5v-3H7a3 3 0 0 0 0 6h8v2H7A5 5 0 0 1 7 7z'),
+        route: '/returns'
+      }
+    ];
+  }
+
+  private getWebsiteSettingsMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'sidebarTitles.ecommerce_settings',
+        icon: this.navIcon('M4 4h16v16H4V4zm2 2v4h12V6H6zm0 6v6h12v-6H6z'),
+        route: '/ecommerce-settings'
+      },
+      {
+        label: 'sidebarTitles.website_images',
+        icon: this.navIcon('M4 5h16v14H4V5zm2 2v8l3-3 3 3 4-5 2 3V7H6z'),
+        route: '/website-images'
+      }
+    ];
+  }
+
+  private getReportsMenuItems(): MenuItem[] {
+    return [
+      {
+        label: 'sidebarTitles.category_import_export',
+        icon: this.navIcon('M5 4h14v4h-2V6H7v12h10v-2h2v4H5V4zm7 5 4 4-4 4v-3H8v-2h4V9z'),
+        showCategoryTools: true
+      },
+      {
+        label: 'sidebarTitles.profit_report',
+        icon: this.navIcon('M4 19h16v2H2V3h2v16zm3-2V9h3v8H7zm5 0V5h3v12h-3zm5 0v-6h3v6h-3z'),
+        route: '/products/profit-report'
+      }
+    ];
   }
 
   isProductsContext(): boolean {

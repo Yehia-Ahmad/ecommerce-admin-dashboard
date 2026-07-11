@@ -10,10 +10,12 @@
         "customers": "Customers",
         "selling": "Selling",
         "credit_sales": "Credit Sales",
+        "website_orders": "Website Orders",
         "custom_sales": "Custom Sales",
         "invoice_history": "Invoice History",
         "returns": "Returns",
         "profit_report": "Profit Report",
+        "category_import_export": "Category Import/Export",
         "ecommerce_settings": "E-commerce Settings",
         "website_images": "Website Images",
         "export_products": "Export Products",
@@ -290,35 +292,23 @@
         "cards": {
             "inventory": {
                 "title": "Inventory",
-                "description": "Manage inventory operations."
-            },
-            "products": {
-                "title": "Products",
-                "description": "Go to selling and invoice history pages."
-            },
-            "customers": {
-                "title": "Customers",
-                "description": "Create and manage customer records."
-            },
-            "ecommerceSettings": {
-                "title": "E-commerce Settings",
-                "description": "Control website category visibility, products, and filters."
-            },
-            "websiteOrders": {
-                "title": "Website Orders",
-                "description": "Review, confirm, and refund website orders."
+                "description": "Open categories and customers."
             },
             "selling": {
                 "title": "Selling",
-                "description": "Open the selling page."
+                "description": "Open selling, credit sales, and website orders."
             },
-            "creditSales": {
-                "title": "Credit Sales",
-                "description": "Open the sale on credit workspace."
+            "selling-history": {
+                "title": "Selling History",
+                "description": "Open invoice history and returns."
             },
-            "invoiceHistory": {
-                "title": "Invoice History",
-                "description": "Open invoice history page."
+            "website-settings": {
+                "title": "Website Settings",
+                "description": "Open website settings and website images."
+            },
+            "reports": {
+                "title": "Reports",
+                "description": "Open category import/export tools and profit report."
             }
         },
         "pages": {

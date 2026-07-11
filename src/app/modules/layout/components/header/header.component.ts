@@ -35,7 +35,7 @@ export class HeaderComponent {
 
   constructor(private _languageService: LanguageService, private _themeService: ThemeService, private _location: Location) {
     this.currentLang = _languageService.selectedLanguage();
-    this.isDarkMode$ = this._themeService.isDarkMode$
+    this.isDarkMode$ = this._themeService.isDarkMode$;
 
   }
 

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, computed, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SideNavComponent } from "../side-nav/side-nav.component";
 import { ThemeService } from '../../../shared/services/theme.service';
@@ -6,6 +6,7 @@ import { HeaderComponent } from "../header/header.component";
 import { TranslatePipe } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HOME_DEFAULT_VIEW, HOME_VIEW_STORAGE_KEY, HOME_VIEWS, HomeView } from '../../constants/home-view.constants';
+import { LanguageService } from '../../../shared/services/translation.service';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,13 @@ import { HOME_DEFAULT_VIEW, HOME_VIEW_STORAGE_KEY, HOME_VIEWS, HomeView } from '
 export class HomeComponent implements OnInit {
   currentView: HomeView = HOME_DEFAULT_VIEW;
   isDarkMode$;
+  currentLang = computed(() => this._languageService.selectedLanguage());
+  direction = computed(() => this.currentLang() === 'ar' ? 'rtl' : 'ltr');
   private isBrowser: boolean;
 
   constructor(
     private _themeService: ThemeService,
+    private _languageService: LanguageService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     @Inject(PLATFORM_ID) platformId: Object
@@ -38,43 +42,24 @@ export class HomeComponent implements OnInit {
     this.setCurrentView('inventory');
   }
 
-  openProducts(): void {
-    this.setCurrentView('products');
+  openSellingSection(): void {
+    this.setCurrentView('selling');
   }
 
-  openCustomers(): void {
-    this._router.navigate(['/customers']);
+  openSellingHistory(): void {
+    this.setCurrentView('selling-history');
   }
 
-  openEcommerceSettings(): void {
-    this._router.navigate(['/ecommerce-settings']);
+  openWebsiteSettings(): void {
+    this.setCurrentView('website-settings');
   }
 
-  openWebsiteOrders(): void {
-    this._router.navigate(['/website-orders']);
-  }
-
-  openSelling(): void {
-    this.setCurrentView('products');
-    this._router.navigate(['/selling']);
-  }
-
-  openCreditSales(): void {
-    this.setCurrentView('products');
-    this._router.navigate(['/credit-sales']);
-  }
-
-  openInvoiceHistory(): void {
-    this.setCurrentView('products');
-    this._router.navigate(['/invoice-history']);
+  openReports(): void {
+    this.setCurrentView('reports');
   }
 
   backToDashboard(): void {
     this.setCurrentView('dashboard');
-  }
-
-  backToProducts(): void {
-    this.setCurrentView('products');
   }
 
   private setCurrentView(view: HomeView): void {

@@ -1,10 +1,10 @@
 @if (currentView === 'dashboard') {
   <app-header></app-header>
-  <div class="w-full min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-8" [ngClass]="{
+  <div class="w-full min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 sm:p-8" [attr.dir]="direction()" [ngClass]="{
     'bg-dark': (isDarkMode$ | async),
     'bg-light_bg': !(isDarkMode$ | async)
   }">
-    <div class="mx-auto flex w-full max-w-5xl items-center justify-center">
+    <div class="mx-auto flex w-full max-w-6xl items-center justify-center">
       <div class="w-full rounded-2xl border p-6 sm:p-10" [ngClass]="{
         'bg-gray_dark border-gray': (isDarkMode$ | async),
         'bg-light_content_bg border-[#E6E6E6]': !(isDarkMode$ | async)
@@ -25,12 +25,14 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           <button
             type="button"
             (click)="openInventory()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
+            class="w-full rounded-[0.85rem] border p-[1.4rem] transition duration-200 hover:-translate-y-0.5"
             [ngClass]="{
+              'text-right': currentLang() === 'ar',
+              'text-left': currentLang() !== 'ar',
               'border-[#515151] bg-gray_dark hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
               'border-[#e2e2e2] bg-white hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
             }"
@@ -47,139 +49,13 @@
 
           <button
             type="button"
-            (click)="openProducts()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
+            (click)="openSellingSection()"
+            class="w-full rounded-[0.85rem] border p-[1.4rem] transition duration-200 hover:-translate-y-0.5"
             [ngClass]="{
-              'border-[#515151] bg-gray_dark hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
-              'border-[#e2e2e2] bg-white hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
-            }"
-          >
-            <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
-              'text-light_orange': (isDarkMode$ | async),
-              'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.products.title' | translate }}</h2>
-            <p class="font-roboto text-[0.95rem]" [ngClass]="{
-              'text-gray_light': (isDarkMode$ | async),
-              'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.products.description' | translate }}</p>
-          </button>
-
-          <button
-            type="button"
-            (click)="openCustomers()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
-            [ngClass]="{
-              'border-[#515151] bg-gray_dark hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
-              'border-[#e2e2e2] bg-white hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
-            }"
-          >
-            <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
-              'text-light_orange': (isDarkMode$ | async),
-              'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.customers.title' | translate }}</h2>
-            <p class="font-roboto text-[0.95rem]" [ngClass]="{
-              'text-gray_light': (isDarkMode$ | async),
-              'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.customers.description' | translate }}</p>
-          </button>
-
-          <button
-            type="button"
-            (click)="openEcommerceSettings()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
-            [ngClass]="{
+              'text-right': currentLang() === 'ar',
+              'text-left': currentLang() !== 'ar',
               'border-[#515151] bg-gray_dark hover:border-[#20c997] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
               'border-[#e2e2e2] bg-white hover:border-[#20c997] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
-            }"
-          >
-            <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
-              'text-light_orange': (isDarkMode$ | async),
-              'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.ecommerceSettings.title' | translate }}</h2>
-            <p class="font-roboto text-[0.95rem]" [ngClass]="{
-              'text-gray_light': (isDarkMode$ | async),
-              'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.ecommerceSettings.description' | translate }}</p>
-          </button>
-
-          <button
-            type="button"
-            (click)="openWebsiteOrders()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
-            [ngClass]="{
-              'border-[#515151] bg-gray_dark hover:border-[#0d6efd] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
-              'border-[#e2e2e2] bg-white hover:border-[#0d6efd] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
-            }"
-          >
-            <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
-              'text-light_orange': (isDarkMode$ | async),
-              'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.websiteOrders.title' | translate }}</h2>
-            <p class="font-roboto text-[0.95rem]" [ngClass]="{
-              'text-gray_light': (isDarkMode$ | async),
-              'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.websiteOrders.description' | translate }}</p>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-} @else {
-  <app-side-nav>
-    <div class="w-full flex flex-col items-start gap-8">
-      @if (currentView === 'inventory') {
-        <div class="w-full flex items-center justify-between gap-4">
-          <h1 class="text-2xl font-bold font-azonix" [ngClass]="{
-            'text-gray_light': (isDarkMode$ | async),
-            'text-orange': !(isDarkMode$ | async)
-          }">{{ 'home.cards.inventory.title' | translate }}</h1>
-
-          <button
-            type="button"
-            (click)="backToDashboard()"
-            class="cursor-pointer rounded-[0.65rem] border border-transparent bg-[#f4d80a] px-4 py-2 font-roboto text-[0.95rem] font-bold text-gray_dark transition-opacity duration-200 hover:opacity-90"
-          >
-            {{ 'home.actions.back' | translate }}
-          </button>
-        </div>
-
-        <div class="w-full rounded-xl p-6 sm:p-8" [ngClass]="{
-          'bg-gray_dark': (isDarkMode$ | async),
-          'bg-light_card_bg': !(isDarkMode$ | async)
-        }">
-          <p class="text-base font-roboto" [ngClass]="{
-            'text-light_orange': (isDarkMode$ | async),
-            'text-gray_dark': !(isDarkMode$ | async)
-          }">
-            {{ 'home.pages.inventoryReady' | translate }}
-          </p>
-        </div>
-      }
-
-      @if (currentView === 'products') {
-        <div class="w-full flex items-center justify-between gap-4">
-          <h1 class="text-2xl font-bold font-azonix" [ngClass]="{
-            'text-gray_light': (isDarkMode$ | async),
-            'text-orange': !(isDarkMode$ | async)
-          }">{{ 'home.cards.products.title' | translate }}</h1>
-
-          <button
-            type="button"
-            (click)="backToDashboard()"
-            class="cursor-pointer rounded-[0.65rem] border border-transparent bg-[#f4d80a] px-4 py-2 font-roboto text-[0.95rem] font-bold text-gray_dark transition-opacity duration-200 hover:opacity-90"
-          >
-            {{ 'home.actions.back' | translate }}
-          </button>
-        </div>
-
-        <div class="grid w-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <button
-            type="button"
-            (click)="openSelling()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
-            [ngClass]="{
-              'border-[#515151] bg-gray_dark hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
-              'border-[#e2e2e2] bg-white hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
             }"
           >
             <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
@@ -194,9 +70,32 @@
 
           <button
             type="button"
-            (click)="openCreditSales()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
+            (click)="openSellingHistory()"
+            class="w-full rounded-[0.85rem] border p-[1.4rem] transition duration-200 hover:-translate-y-0.5"
             [ngClass]="{
+              'text-right': currentLang() === 'ar',
+              'text-left': currentLang() !== 'ar',
+              'border-[#515151] bg-gray_dark hover:border-[#0d6efd] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
+              'border-[#e2e2e2] bg-white hover:border-[#0d6efd] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
+            }"
+          >
+            <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
+              'text-light_orange': (isDarkMode$ | async),
+              'text-gray_dark': !(isDarkMode$ | async)
+            }">{{ 'home.cards.selling-history.title' | translate }}</h2>
+            <p class="font-roboto text-[0.95rem]" [ngClass]="{
+              'text-gray_light': (isDarkMode$ | async),
+              'text-gray': !(isDarkMode$ | async)
+            }">{{ 'home.cards.selling-history.description' | translate }}</p>
+          </button>
+
+          <button
+            type="button"
+            (click)="openWebsiteSettings()"
+            class="w-full rounded-[0.85rem] border p-[1.4rem] transition duration-200 hover:-translate-y-0.5"
+            [ngClass]="{
+              'text-right': currentLang() === 'ar',
+              'text-left': currentLang() !== 'ar',
               'border-[#515151] bg-gray_dark hover:border-[#20c997] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
               'border-[#e2e2e2] bg-white hover:border-[#20c997] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
             }"
@@ -204,18 +103,20 @@
             <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
               'text-light_orange': (isDarkMode$ | async),
               'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.creditSales.title' | translate }}</h2>
+            }">{{ 'home.cards.website-settings.title' | translate }}</h2>
             <p class="font-roboto text-[0.95rem]" [ngClass]="{
               'text-gray_light': (isDarkMode$ | async),
               'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.creditSales.description' | translate }}</p>
+            }">{{ 'home.cards.website-settings.description' | translate }}</p>
           </button>
 
           <button
             type="button"
-            (click)="openInvoiceHistory()"
-            class="w-full rounded-[0.85rem] border p-[1.4rem] text-left transition duration-200 hover:-translate-y-0.5"
+            (click)="openReports()"
+            class="w-full rounded-[0.85rem] border p-[1.4rem] transition duration-200 hover:-translate-y-0.5"
             [ngClass]="{
+              'text-right': currentLang() === 'ar',
+              'text-left': currentLang() !== 'ar',
               'border-[#515151] bg-gray_dark hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(0,0,0,0.2)]': (isDarkMode$ | async),
               'border-[#e2e2e2] bg-white hover:border-[#f4d80a] hover:shadow-[0_12px_24px_rgba(47,47,47,0.1)]': !(isDarkMode$ | async)
             }"
@@ -223,72 +124,45 @@
             <h2 class="mb-2 font-azonix text-azonix-card" [ngClass]="{
               'text-light_orange': (isDarkMode$ | async),
               'text-gray_dark': !(isDarkMode$ | async)
-            }">{{ 'home.cards.invoiceHistory.title' | translate }}</h2>
+            }">{{ 'home.cards.reports.title' | translate }}</h2>
             <p class="font-roboto text-[0.95rem]" [ngClass]="{
               'text-gray_light': (isDarkMode$ | async),
               'text-gray': !(isDarkMode$ | async)
-            }">{{ 'home.cards.invoiceHistory.description' | translate }}</p>
+            }">{{ 'home.cards.reports.description' | translate }}</p>
           </button>
         </div>
-      }
+      </div>
+    </div>
+  </div>
+} @else {
+  <app-side-nav>
+    <div class="w-full flex flex-col items-start gap-6" [attr.dir]="direction()">
+      <div class="w-full flex items-center justify-between gap-4">
+        <h1 class="text-2xl font-bold font-azonix" [ngClass]="{
+          'text-gray_light': (isDarkMode$ | async),
+          'text-orange': !(isDarkMode$ | async)
+        }">{{ ('home.cards.' + currentView + '.title') | translate }}</h1>
 
-      @if (currentView === 'selling') {
-        <div class="w-full flex items-center justify-between gap-4">
-          <h1 class="text-2xl font-bold font-azonix" [ngClass]="{
-            'text-gray_light': (isDarkMode$ | async),
-            'text-orange': !(isDarkMode$ | async)
-          }">{{ 'home.cards.selling.title' | translate }}</h1>
+        <button
+          type="button"
+          (click)="backToDashboard()"
+          class="cursor-pointer rounded-[0.65rem] border border-transparent bg-[#f4d80a] px-4 py-2 font-roboto text-[0.95rem] font-bold text-gray_dark transition-opacity duration-200 hover:opacity-90"
+        >
+          {{ 'home.actions.back' | translate }}
+        </button>
+      </div>
 
-          <button
-            type="button"
-            (click)="backToProducts()"
-            class="cursor-pointer rounded-[0.65rem] border border-transparent bg-[#f4d80a] px-4 py-2 font-roboto text-[0.95rem] font-bold text-gray_dark transition-opacity duration-200 hover:opacity-90"
-          >
-            {{ 'home.actions.back' | translate }}
-          </button>
-        </div>
-
-        <div class="w-full rounded-xl p-6 sm:p-8" [ngClass]="{
-          'bg-gray_dark': (isDarkMode$ | async),
-          'bg-light_card_bg': !(isDarkMode$ | async)
+      <div class="w-full rounded-xl p-6 sm:p-8" [ngClass]="{
+        'bg-gray_dark': (isDarkMode$ | async),
+        'bg-light_card_bg': !(isDarkMode$ | async)
+      }">
+        <p class="text-base font-roboto" [ngClass]="{
+          'text-light_orange': (isDarkMode$ | async),
+          'text-gray_dark': !(isDarkMode$ | async)
         }">
-          <p class="text-base font-roboto" [ngClass]="{
-            'text-light_orange': (isDarkMode$ | async),
-            'text-gray_dark': !(isDarkMode$ | async)
-          }">
-            {{ 'home.pages.sellingReady' | translate }}
-          </p>
-        </div>
-      }
-
-      @if (currentView === 'invoice-history') {
-        <div class="w-full flex items-center justify-between gap-4">
-          <h1 class="text-2xl font-bold font-azonix" [ngClass]="{
-            'text-gray_light': (isDarkMode$ | async),
-            'text-orange': !(isDarkMode$ | async)
-          }">{{ 'home.cards.invoiceHistory.title' | translate }}</h1>
-
-          <button
-            type="button"
-            (click)="backToProducts()"
-            class="cursor-pointer rounded-[0.65rem] border border-transparent bg-[#f4d80a] px-4 py-2 font-roboto text-[0.95rem] font-bold text-gray_dark transition-opacity duration-200 hover:opacity-90"
-          >
-            {{ 'home.actions.back' | translate }}
-          </button>
-        </div>
-
-        <div class="w-full rounded-xl p-6 sm:p-8" [ngClass]="{
-          'bg-gray_dark': (isDarkMode$ | async),
-          'bg-light_card_bg': !(isDarkMode$ | async)
-        }">
-          <p class="text-base font-roboto" [ngClass]="{
-            'text-light_orange': (isDarkMode$ | async),
-            'text-gray_dark': !(isDarkMode$ | async)
-          }">
-            {{ 'home.pages.invoiceHistoryReady' | translate }}
-          </p>
-        </div>
-      }
+          {{ ('home.cards.' + currentView + '.description') | translate }}
+        </p>
+      </div>
     </div>
   </app-side-nav>
 }

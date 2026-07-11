@@ -10,10 +10,12 @@
     "customers": "العملاء",
     "selling": "البيع",
     "credit_sales": "البيع الآجل",
+    "website_orders": "طلبات الموقع",
     "custom_sales": "المبيعات المخصصة",
     "invoice_history": "سجل الفواتير",
     "returns": "المرتجعات",
     "profit_report": "تقرير الأرباح",
+    "category_import_export": "استيراد وتصدير الفئات",
     "ecommerce_settings": "إعدادات المتجر",
     "website_images": "صور الموقع",
     "export_products": "تصدير المنتجات",
@@ -293,35 +295,23 @@
     "cards": {
       "inventory": {
         "title": "المخزون",
-        "description": "إدارة عمليات المخزون."
-      },
-      "products": {
-        "title": "المنتجات",
-        "description": "الانتقال إلى صفحات البيع وسجل الفواتير."
-      },
-      "customers": {
-        "title": "العملاء",
-        "description": "إنشاء وإدارة بيانات العملاء."
-      },
-      "ecommerceSettings": {
-        "title": "إعدادات المتجر",
-        "description": "تحكم في ظهور الفئات والمنتجات والفلاتر على الموقع."
-      },
-      "websiteOrders": {
-        "title": "طلبات الموقع",
-        "description": "مراجعة وتأكيد واسترجاع طلبات الموقع."
+        "description": "فتح الفئات والعملاء."
       },
       "selling": {
         "title": "البيع",
-        "description": "فتح صفحة البيع."
+        "description": "فتح البيع والبيع الآجل وطلبات الموقع."
       },
-      "creditSales": {
-        "title": "البيع الآجل",
-        "description": "فتح مساحة عمل البيع بالتقسيط."
+      "selling-history": {
+        "title": "سجل البيع",
+        "description": "فتح سجل الفواتير والمرتجعات."
       },
-      "invoiceHistory": {
-        "title": "سجل الفواتير",
-        "description": "فتح صفحة سجل الفواتير."
+      "website-settings": {
+        "title": "إعدادات الموقع",
+        "description": "فتح إعدادات الموقع وصور الموقع."
+      },
+      "reports": {
+        "title": "التقارير",
+        "description": "فتح أدوات استيراد وتصدير الفئات وتقرير الأرباح."
       }
     },
     "pages": {
