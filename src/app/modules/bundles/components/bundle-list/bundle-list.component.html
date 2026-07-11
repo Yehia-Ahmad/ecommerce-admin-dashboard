@@ -1,0 +1,348 @@
+<app-side-nav>
+  <div
+    class="grid min-h-full auto-rows-min content-start gap-5 p-4"
+    [ngClass]="{
+      'bg-[#1f1f1f] text-light_orange': isDarkMode$ | async,
+      'bg-[#f7f7f7] text-gray_dark': !(isDarkMode$ | async),
+    }"
+  >
+    <div class="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+      <div>
+        <h1 class="m-0 font-azonix text-2xl text-orange">{{ 'bundles.title' | translate }}</h1>
+        <p class="mt-1 text-[#bdbdbd]">{{ 'bundles.subtitle' | translate }}</p>
+      </div>
+      <button
+        type="button"
+        class="rounded-lg bg-orange px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+        (click)="createBundle()"
+      >
+        {{ 'bundles.actions.create' | translate }}
+      </button>
+    </div>
+
+    <section
+      class="grid gap-3 rounded-xl border border-[#515151] bg-[#2f2f2f] p-4 sm:grid-cols-2 xl:grid-cols-5"
+      aria-label="Bundle filters"
+    >
+      <input
+        pInputText
+        class="w-full rounded-lg border border-[#696969] bg-[#393939] p-3 text-light_orange outline-none focus:border-orange"
+        type="search"
+        [(ngModel)]="filters.search"
+        (keyup.enter)="applyFilters()"
+        [placeholder]="'bundles.filters.search' | translate"
+      />
+
+      <p-select
+        [options]="statusOptions"
+        [(ngModel)]="filters.isActive"
+        optionLabel="label"
+        optionValue="value"
+        appendTo="body"
+        styleClass="w-full"
+      />
+
+      <p-select
+        [options]="availabilityOptions"
+        [(ngModel)]="filters.isAvailable"
+        optionLabel="label"
+        optionValue="value"
+        appendTo="body"
+        styleClass="w-full"
+      />
+
+      <p-select
+        [options]="pricingOptions"
+        [(ngModel)]="filters.pricingType"
+        optionLabel="label"
+        optionValue="value"
+        appendTo="body"
+        styleClass="w-full"
+      />
+
+      <p-datepicker
+        [(ngModel)]="filters.startDate"
+        [showIcon]="true"
+        iconDisplay="input"
+        appendTo="body"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+        [placeholder]="'bundles.fields.startDate' | translate"
+      />
+      <p-datepicker
+        [(ngModel)]="filters.endDate"
+        [showIcon]="true"
+        iconDisplay="input"
+        appendTo="body"
+        styleClass="w-full"
+        inputStyleClass="w-full"
+        [placeholder]="'bundles.fields.endDate' | translate"
+      />
+
+      <p-select
+        [options]="sortByOptions"
+        [(ngModel)]="filters.sortBy"
+        appendTo="body"
+        styleClass="w-full"
+      >
+        <ng-template #selectedItem let-value>
+          {{ 'bundles.sort.' + value | translate }}
+        </ng-template>
+        <ng-template #item let-value>
+          {{ 'bundles.sort.' + value | translate }}
+        </ng-template>
+      </p-select>
+
+      <p-select
+        [options]="sortOrderOptions"
+        [(ngModel)]="filters.sortOrder"
+        appendTo="body"
+        styleClass="w-full"
+      >
+        <ng-template #selectedItem let-value>
+          {{ 'bundles.sortOrder.' + value | translate }}
+        </ng-template>
+        <ng-template #item let-value>
+          {{ 'bundles.sortOrder.' + value | translate }}
+        </ng-template>
+      </p-select>
+
+      <button
+        type="button"
+        class="rounded-lg bg-orange px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+        (click)="applyFilters()"
+        [disabled]="isLoading()"
+      >
+        {{ 'bundles.actions.applyFilters' | translate }}
+      </button>
+      <button
+        type="button"
+        class="rounded-lg bg-[#e1e0e0] px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+        (click)="clearFilters()"
+        [disabled]="isLoading()"
+      >
+        {{ 'bundles.actions.clearFilters' | translate }}
+      </button>
+    </section>
+
+    <section class="rounded-xl border border-[#515151] bg-[#2f2f2f] p-4">
+      @if (loadError()) {
+        <div class="grid gap-3 p-8 text-center text-red-300">
+          <p>{{ loadError() }}</p>
+          <button
+            type="button"
+            class="mx-auto rounded-lg bg-orange px-4 py-3 font-bold text-gray_dark"
+            (click)="loadBundles()"
+          >
+            {{ 'bundles.actions.retry' | translate }}
+          </button>
+        </div>
+      } @else {
+        <div class="overflow-x-auto">
+          <p-table
+            [value]="bundles"
+            [loading]="isLoading()"
+            [tableStyle]="{ 'min-width': '1450px' }"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.image' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">{{ 'bundles.columns.name' | translate }}</th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.itemsCount' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.originalPrice' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.finalPrice' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.savedAmount' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.availableStock' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.availability' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.active' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.startDate' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.endDate' | translate }}
+                </th>
+                <th class="!bg-[#393939] !text-orange">
+                  {{ 'bundles.columns.actions' | translate }}
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-bundle>
+              <tr>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  <img
+                    class="h-14 w-14 rounded-lg bg-black object-cover"
+                    [src]="bundle.image || 'assets/img/Kapo.jpeg'"
+                    [alt]="bundle.name"
+                  />
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  <strong class="block">{{ bundle.name }}</strong>
+                  <span class="block text-[#bdbdbd]">{{ bundle.slug || '-' }}</span>
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.itemsCount }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.originalPrice | number: '1.2-2' }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.finalPrice | number: '1.2-2' }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.savedAmount | number: '1.2-2' }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.availableStock }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  <span
+                    class="inline-block rounded-full px-2 py-1 text-xs font-bold"
+                    [ngClass]="
+                      bundle.isAvailable ? 'bg-green-800 text-green-100' : 'bg-red-800 text-red-100'
+                    "
+                    >{{
+                      (bundle.isAvailable
+                        ? 'bundles.status.available'
+                        : 'bundles.status.unavailable'
+                      ) | translate
+                    }}</span
+                  >
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  <span
+                    class="inline-block rounded-full px-2 py-1 text-xs font-bold"
+                    [ngClass]="
+                      bundle.isActive ? 'bg-green-800 text-green-100' : 'bg-gray-600 text-white'
+                    "
+                    >{{
+                      (bundle.isActive ? 'bundles.status.active' : 'bundles.status.inactive')
+                        | translate
+                    }}</span
+                  >
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.startDate ? (bundle.startDate | date: 'yyyy-MM-dd') : '-' }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  {{ bundle.endDate ? (bundle.endDate | date: 'yyyy-MM-dd') : '-' }}
+                </td>
+                <td class="!border-[#515151] !bg-[#2f2f2f] !text-light_orange">
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      class="rounded-md border border-orange px-2 py-1 text-light_orange disabled:cursor-not-allowed disabled:opacity-60"
+                      (click)="viewBundle(bundle)"
+                      [attr.aria-label]="'bundles.actions.view' | translate"
+                    >
+                      {{ 'bundles.actions.view' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="rounded-md border border-orange px-2 py-1 text-light_orange disabled:cursor-not-allowed disabled:opacity-60"
+                      (click)="editBundle(bundle)"
+                      [attr.aria-label]="'bundles.actions.edit' | translate"
+                    >
+                      {{ 'bundles.actions.edit' | translate }}
+                    </button>
+                    <!-- <button type="button" class="rounded-md border border-orange px-2 py-1 text-light_orange disabled:cursor-not-allowed disabled:opacity-60" (click)="openConfirm(bundle, 'duplicate')" [disabled]="actionLoadingId() === bundle.id">{{ 'bundles.actions.duplicate' | translate }}</button> -->
+                    <button
+                      type="button"
+                      class="rounded-md border border-orange px-2 py-1 text-light_orange disabled:cursor-not-allowed disabled:opacity-60"
+                      (click)="openConfirm(bundle, 'status')"
+                      [disabled]="actionLoadingId() === bundle.id"
+                    >
+                      {{
+                        (bundle.isActive
+                          ? 'bundles.actions.deactivate'
+                          : 'bundles.actions.activate'
+                        ) | translate
+                      }}
+                    </button>
+                    <button
+                      type="button"
+                      class="rounded-md border border-red-500 px-2 py-1 text-red-300 disabled:cursor-not-allowed disabled:opacity-60"
+                      (click)="openConfirm(bundle, 'delete')"
+                      [disabled]="actionLoadingId() === bundle.id"
+                    >
+                      {{ 'bundles.actions.delete' | translate }}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="12" class="!bg-[#2f2f2f] p-8 text-center !text-[#d1d5db]">
+                  {{
+                    (filters.search ||
+                    filters.isActive !== null ||
+                    filters.isAvailable !== null ||
+                    filters.pricingType
+                      ? 'bundles.empty.filtered'
+                      : 'bundles.empty.all'
+                    ) | translate
+                  }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <app-pagination
+          [totalPages]="pagination.totalPages"
+          [currentPage]="pagination.page"
+          (pageChange)="pageChanged($event)"
+        ></app-pagination>
+      }
+    </section>
+  </div>
+
+  <p-dialog
+    [(visible)]="confirmDialogVisible"
+    [modal]="true"
+    [style]="{ width: 'min(34rem, 94vw)' }"
+    styleClass="!border-0"
+    (onHide)="closeConfirm()"
+  >
+    <div class="grid gap-4 p-5 text-light_orange">
+      <h2 class="m-0 font-azonix text-xl text-orange">{{ confirmTitle() | translate }}</h2>
+      <p class="m-0">{{ confirmMessage() | translate }}</p>
+      <div class="flex justify-end gap-3">
+        <button
+          type="button"
+          class="rounded-lg bg-[#e1e0e0] px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+          (click)="closeConfirm()"
+          [disabled]="!!actionLoadingId()"
+        >
+          {{ 'actions.cancelButton' | translate }}
+        </button>
+        <button
+          type="button"
+          class="rounded-lg bg-orange px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+          (click)="runConfirmedAction()"
+          [disabled]="!!actionLoadingId()"
+        >
+          {{ (actionLoadingId() ? 'actions.loading' : 'bundles.actions.confirm') | translate }}
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</app-side-nav>

@@ -25,6 +25,30 @@ export const routes: Routes = [
         loadComponent: () => import('./modules/customer/components/customer-details/customer-details.component').then(m => m.CustomerDetailsComponent)
     },
     {
+        path: 'admin/bundles',
+        // canActivate: [authGuard],
+        data: { permission: 'bundles.view' },
+        loadComponent: () => import('./modules/bundles/components/bundle-list/bundle-list.component').then(m => m.BundleListComponent)
+    },
+    {
+        path: 'admin/bundles/create',
+        // canActivate: [authGuard],
+        data: { permission: 'bundles.create' },
+        loadComponent: () => import('./modules/bundles/components/bundle-form-page/bundle-form-page.component').then(m => m.BundleFormPageComponent)
+    },
+    {
+        path: 'admin/bundles/:id/edit',
+        // canActivate: [authGuard],
+        data: { permission: 'bundles.update' },
+        loadComponent: () => import('./modules/bundles/components/bundle-form-page/bundle-form-page.component').then(m => m.BundleFormPageComponent)
+    },
+    {
+        path: 'admin/bundles/:id',
+        // canActivate: [authGuard],
+        data: { permission: 'bundles.view' },
+        loadComponent: () => import('./modules/bundles/components/bundle-details/bundle-details.component').then(m => m.BundleDetailsComponent)
+    },
+    {
         path: 'selling',
         // canActivate: [authGuard],
         loadComponent: () => import('./modules/products/components/selling/selling.component').then(m => m.SellingComponent)

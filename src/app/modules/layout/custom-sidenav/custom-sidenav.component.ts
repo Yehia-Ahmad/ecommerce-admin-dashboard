@@ -366,6 +366,11 @@ export class CustomSidenavComponent implements OnInit {
         </span>
         `),
         children: this.categories,
+      },
+      {
+        label: 'sidebarTitles.bundles',
+        icon: this.navIcon('M20 7h-2.2A3 3 0 0 0 12 5.8 3 3 0 0 0 6.2 7H4v5h1v8h14v-8h1V7zM9 5a1 1 0 0 1 1 1v1H8.8A1.8 1.8 0 0 1 9 5zm6 0a1.8 1.8 0 0 1 .2 2H14V6a1 1 0 0 1 1-1zM6 9h5v2H6V9zm7 0h5v2h-5V9zm-6 4h4v5H7v-5zm6 0h4v5h-4v-5z'),
+        route: '/admin/bundles'
       }
     ]);
   }
@@ -385,7 +390,9 @@ export class CustomSidenavComponent implements OnInit {
   }
 
   private isInventoryRoute(): boolean {
-    return this._router.url.includes('/categories') || this._router.url.includes('/customers');
+    return this._router.url.includes('/categories')
+      || this._router.url.includes('/customers')
+      || this._router.url.includes('/admin/bundles');
   }
 
   private isSellingRoute(): boolean {
@@ -409,14 +416,19 @@ export class CustomSidenavComponent implements OnInit {
   private getInventoryMenuItems(): MenuItem[] {
     return [
       {
+        label: 'sidebarTitles.customers',
+        icon: this.navIcon('M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-8 1.67-8 5v1h16v-1c0-3.33-4.69-5-8-5z'),
+        route: '/customers'
+      },
+      {
         label: 'sidebarTitles.categories',
         icon: this.navIcon('M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z'),
         children: this.categories,
       },
       {
-        label: 'sidebarTitles.customers',
-        icon: this.navIcon('M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-8 1.67-8 5v1h16v-1c0-3.33-4.69-5-8-5z'),
-        route: '/customers'
+        label: 'sidebarTitles.bundles',
+        icon: this.navIcon('M20 7h-2.2A3 3 0 0 0 12 5.8 3 3 0 0 0 6.2 7H4v5h1v8h14v-8h1V7zM9 5a1 1 0 0 1 1 1v1H8.8A1.8 1.8 0 0 1 9 5zm6 0a1.8 1.8 0 0 1 .2 2H14V6a1 1 0 0 1 1-1zM6 9h5v2H6V9zm7 0h5v2h-5V9zm-6 4h4v5H7v-5zm6 0h4v5h-4v-5z'),
+        route: '/admin/bundles'
       }
     ];
   }

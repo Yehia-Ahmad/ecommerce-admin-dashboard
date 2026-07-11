@@ -7,6 +7,8 @@
         "addAdmins": "Add Admins",
         "showAdmins": "Show Admins",
         "products": "Products",
+        "catalog": "Catalog",
+        "bundles": "Bundles",
         "customers": "Customers",
         "selling": "Selling",
         "credit_sales": "Credit Sales",
@@ -1249,6 +1251,168 @@
         "confirm": {
             "title": "Confirm action",
             "message": "Are you sure you want to continue?"
+        }
+    },
+    "bundles": {
+        "title": "Bundles",
+        "subtitle": "Manage grouped products sold together at a fixed price or discount.",
+        "createTitle": "Create Bundle",
+        "editTitle": "Edit Bundle",
+        "columns": {
+            "image": "Image",
+            "name": "Bundle Name",
+            "itemsCount": "Products",
+            "originalPrice": "Original Price",
+            "finalPrice": "Final Price",
+            "savedAmount": "Saved",
+            "discountPercentage": "Discount %",
+            "availableStock": "Stock",
+            "availability": "Availability",
+            "active": "Active",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "createdAt": "Created",
+            "updatedAt": "Updated",
+            "actions": "Actions"
+        },
+        "fields": {
+            "name": "Bundle name",
+            "description": "Description",
+            "image": "Bundle image",
+            "isActive": "Active status",
+            "startDate": "Start date",
+            "endDate": "End date",
+            "product": "Product",
+            "variant": "Variant",
+            "sku": "SKU",
+            "quantity": "Quantity",
+            "pricingType": "Pricing type",
+            "fixedPrice": "Fixed price",
+            "discountType": "Discount type",
+            "discountValue": "Discount value"
+        },
+        "filters": {
+            "search": "Search bundles",
+            "status": { "all": "All statuses", "active": "Active", "inactive": "Inactive" },
+            "availability": { "all": "All availability", "available": "Available", "unavailable": "Unavailable" },
+            "pricing": { "all": "All pricing", "fixed": "Fixed", "discount": "Discount" }
+        },
+        "sort": {
+            "createdAt": "Creation date",
+            "name": "Name",
+            "originalPrice": "Original price",
+            "finalPrice": "Final price"
+        },
+        "sortOrder": {
+            "asc": "Ascending",
+            "desc": "Descending"
+        },
+        "pricing": {
+            "fixed": "Fixed",
+            "discount": "Discount"
+        },
+        "discount": {
+            "percentage": "Percentage",
+            "fixed": "Fixed amount"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "available": "Available",
+            "unavailable": "Unavailable",
+            "outOfStock": "Out of stock"
+        },
+        "actions": {
+            "create": "Create Bundle",
+            "save": "Save Bundle",
+            "view": "View",
+            "edit": "Edit",
+            "duplicate": "Duplicate",
+            "activate": "Activate",
+            "deactivate": "Deactivate",
+            "delete": "Delete",
+            "confirm": "Confirm",
+            "retry": "Retry",
+            "applyFilters": "Apply",
+            "clearFilters": "Clear",
+            "addProduct": "Add Product",
+            "chooseImage": "Choose image",
+            "remove": "Remove"
+        },
+        "empty": {
+            "all": "No bundles exist yet.",
+            "filtered": "No bundles match the current filters."
+        },
+        "dialog": {
+            "activateTitle": "Activate this bundle?",
+            "deactivateTitle": "Deactivate this bundle?",
+            "deleteTitle": "Delete this bundle?",
+            "duplicateTitle": "Duplicate this bundle?",
+            "statusMessage": "The row will be refreshed after the status is updated.",
+            "deleteMessage": "Deleting the bundle does not remove previous order snapshots.",
+            "duplicateMessage": "A new copied bundle will be created. Backend behavior may keep it inactive by default."
+        },
+        "details": {
+            "includedProducts": "Included Products",
+            "unitPrice": "Unit Price",
+            "requiredStock": "Required Stock",
+            "currentStock": "Current Stock",
+            "possibleBundleQuantity": "Possible Bundles",
+            "subtotal": "Subtotal"
+        },
+        "productSelector": {
+            "title": "Select Product",
+            "searchPlaceholder": "Search by name, SKU, barcode...",
+            "price": "Price",
+            "stock": "Stock",
+            "variants": "Variants",
+            "select": "Select",
+            "empty": "No products found."
+        },
+        "form": {
+            "subtitle": "Backend-calculated prices and stock are authoritative after saving.",
+            "editWarning": "Editing a bundle does not change previous orders.",
+            "productsHint": "Select at least two products or variants and set the required quantity per bundle.",
+            "selectProductPrompt": "Use Add Product to select a product.",
+            "noVariant": "No variant",
+            "sections": {
+                "basic": "Basic Information",
+                "products": "Bundle Products",
+                "pricing": "Pricing"
+            },
+            "pricePreview": {
+                "title": "Price Preview",
+                "previewOnly": "Frontend calculation for preview only. Backend values are authoritative.",
+                "originalPrice": "Products subtotal",
+                "discount": "Discount",
+                "finalPrice": "Final price",
+                "savedAmount": "Customer savings",
+                "savingsPercentage": "Savings percentage"
+            },
+            "stockPreview": {
+                "title": "Stock Preview",
+                "previewOnly": "Frontend stock calculation for preview only.",
+                "availableStock": "Available bundle stock",
+                "limitedBy": "Limited by",
+                "outOfStock": "This bundle is currently out of stock.",
+                "currentStock": "Current stock",
+                "required": "Required",
+                "possible": "Possible bundles",
+                "noItems": "Select products to preview stock."
+            }
+        },
+        "validation": {
+            "required": "This field is required.",
+            "invalidImage": "Use a PNG, JPG, or WebP image up to 2MB.",
+            "quantity": "Quantity must be an integer greater than zero.",
+            "minimumItems": "At least two bundle items are required.",
+            "duplicateItems": "The same product and variant combination cannot be selected twice.",
+            "dateRange": "End date cannot be before start date.",
+            "fixedPrice": "Fixed price is required and must be greater than zero.",
+            "discountType": "Discount type is required.",
+            "discountValue": "Discount value is required and must be greater than zero.",
+            "percentageDiscount": "Percentage discount cannot exceed 100.",
+            "fixedDiscountTooHigh": "Fixed discount cannot make the final price zero or negative."
         }
     },
     "logout": {

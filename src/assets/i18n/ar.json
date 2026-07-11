@@ -7,6 +7,8 @@
     "addAdmins": "إضافة مشرفين",
     "showAdmins": "عرض المشرفين",
     "products": "المنتجات",
+    "catalog": "الكتالوج",
+    "bundles": "المجموعات",
     "customers": "العملاء",
     "selling": "البيع",
     "credit_sales": "البيع الآجل",
@@ -760,7 +762,7 @@
       "guarantorPhone": "أدخل رقم هاتف الضامن",
       "notes": "أضف ملاحظات التحصيل أو الضمانات أو تعليقات الاعتماد",
       "searchProduct": "ابحث بكود المنتج أو الاسم",
-      "itemName": "أدخل اسم المنتج أو الباقة",
+      "itemName": "أدخل اسم المنتج أو المجموعة",
       "itemCode": "كود داخلي / SKU"
     },
     "actions": {
@@ -1252,6 +1254,168 @@
     "confirm": {
       "title": "تأكيد العملية",
       "message": "هل أنت متأكد أنك تريد المتابعة؟"
+    }
+  },
+  "bundles": {
+    "title": "المجموعات",
+    "subtitle": "إدارة مجموعات المنتجات التي تباع معاً بسعر ثابت أو خصم.",
+    "createTitle": "إنشاء مجموعة",
+    "editTitle": "تعديل مجموعة",
+    "columns": {
+      "image": "الصورة",
+      "name": "اسم المجموعة",
+      "itemsCount": "المنتجات",
+      "originalPrice": "السعر الأصلي",
+      "finalPrice": "السعر النهائي",
+      "savedAmount": "التوفير",
+      "discountPercentage": "نسبة الخصم",
+      "availableStock": "المخزون",
+      "availability": "الإتاحة",
+      "active": "نشط",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "createdAt": "تاريخ الإنشاء",
+      "updatedAt": "آخر تحديث",
+      "actions": "الإجراءات"
+    },
+    "fields": {
+      "name": "اسم المجموعة",
+      "description": "الوصف",
+      "image": "صورة المجموعة",
+      "isActive": "حالة التفعيل",
+      "startDate": "تاريخ البداية",
+      "endDate": "تاريخ النهاية",
+      "product": "المنتج",
+      "variant": "النوع",
+      "sku": "الكود",
+      "quantity": "الكمية",
+      "pricingType": "نوع التسعير",
+      "fixedPrice": "السعر الثابت",
+      "discountType": "نوع الخصم",
+      "discountValue": "قيمة الخصم"
+    },
+    "filters": {
+      "search": "بحث في المجموعات",
+      "status": { "all": "الحالات", "active": "نشط", "inactive": "غير نشط" },
+      "availability": { "all": "الإتاحة", "available": "متاح", "unavailable": "غير متاح" },
+      "pricing": { "all": "التسعير", "fixed": "ثابت", "discount": "خصم" }
+    },
+    "sort": {
+      "createdAt": "تاريخ الإنشاء",
+      "name": "الاسم",
+      "originalPrice": "السعر الأصلي",
+      "finalPrice": "السعر النهائي"
+    },
+    "sortOrder": {
+      "asc": "تصاعدي",
+      "desc": "تنازلي"
+    },
+    "pricing": {
+      "fixed": "ثابت",
+      "discount": "خصم"
+    },
+    "discount": {
+      "percentage": "نسبة مئوية",
+      "fixed": "مبلغ ثابت"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "available": "متاح",
+      "unavailable": "غير متاح",
+      "outOfStock": "نفد المخزون"
+    },
+    "actions": {
+      "create": "إنشاء مجموعة",
+      "save": "حفظ المجموعة",
+      "view": "عرض",
+      "edit": "تعديل",
+      "duplicate": "تكرار",
+      "activate": "تفعيل",
+      "deactivate": "إلغاء التفعيل",
+      "delete": "حذف",
+      "confirm": "تأكيد",
+      "retry": "إعادة المحاولة",
+      "applyFilters": "تطبيق",
+      "clearFilters": "مسح",
+      "addProduct": "إضافة منتج",
+      "chooseImage": "اختيار صورة",
+      "remove": "إزالة"
+    },
+    "empty": {
+      "all": "لا توجد باقات حتى الآن.",
+      "filtered": "لا توجد باقات مطابقة للفلاتر الحالية."
+    },
+    "dialog": {
+      "activateTitle": "تفعيل هذه المجموعة؟",
+      "deactivateTitle": "إلغاء تفعيل هذه المجموعة؟",
+      "deleteTitle": "حذف هذه المجموعة؟",
+      "duplicateTitle": "تكرار هذه المجموعة؟",
+      "statusMessage": "سيتم تحديث الصف بعد تغيير الحالة.",
+      "deleteMessage": "حذف المجموعة لا يزيل لقطات الطلبات السابقة.",
+      "duplicateMessage": "سيتم إنشاء نسخة جديدة من المجموعة وقد تكون غير نشطة حسب إعدادات الخادم."
+    },
+    "details": {
+      "includedProducts": "المنتجات داخل المجموعة",
+      "unitPrice": "سعر الوحدة",
+      "requiredStock": "المخزون المطلوب",
+      "currentStock": "المخزون الحالي",
+      "possibleBundleQuantity": "المجموعات الممكنة",
+      "subtotal": "الإجمالي"
+    },
+    "productSelector": {
+      "title": "اختيار منتج",
+      "searchPlaceholder": "بحث بالاسم أو الكود أو الباركود...",
+      "price": "السعر",
+      "stock": "المخزون",
+      "variants": "الأنواع",
+      "select": "اختيار",
+      "empty": "لا توجد منتجات."
+    },
+    "form": {
+      "subtitle": "الأسعار والمخزون المحسوب من الخادم هي القيم المعتمدة بعد الحفظ.",
+      "editWarning": "تعديل المجموعة لا يغير الطلبات السابقة.",
+      "productsHint": "اختر منتجين أو نوعين على الأقل وحدد الكمية المطلوبة لكل مجموعة.",
+      "selectProductPrompt": "استخدم زر إضافة منتج لاختيار منتج.",
+      "noVariant": "بدون نوع",
+      "sections": {
+        "basic": "المعلومات الأساسية",
+        "products": "منتجات المجموعة",
+        "pricing": "التسعير"
+      },
+      "pricePreview": {
+        "title": "معاينة السعر",
+        "previewOnly": "حساب الواجهة للمعاينة فقط وقيم الخادم هي المعتمدة.",
+        "originalPrice": "إجمالي المنتجات",
+        "discount": "الخصم",
+        "finalPrice": "السعر النهائي",
+        "savedAmount": "توفير العميل",
+        "savingsPercentage": "نسبة التوفير"
+      },
+      "stockPreview": {
+        "title": "معاينة المخزون",
+        "previewOnly": "حساب مخزون الواجهة للمعاينة فقط.",
+        "availableStock": "مخزون المجموعة المتاح",
+        "limitedBy": "محدود بسبب",
+        "outOfStock": "هذه المجموعة غير متوفرة حالياً.",
+        "currentStock": "المخزون الحالي",
+        "required": "المطلوب",
+        "possible": "المجموعات الممكنة",
+        "noItems": "اختر منتجات لمعاينة المخزون."
+      }
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب.",
+      "invalidImage": "استخدم صورة PNG أو JPG أو WebP حتى 2MB.",
+      "quantity": "يجب أن تكون الكمية رقماً صحيحاً أكبر من صفر.",
+      "minimumItems": "يجب إضافة عنصرين على الأقل للمجموعة.",
+      "duplicateItems": "لا يمكن اختيار نفس المنتج والنوع أكثر من مرة.",
+      "dateRange": "تاريخ النهاية لا يمكن أن يكون قبل تاريخ البداية.",
+      "fixedPrice": "السعر الثابت مطلوب ويجب أن يكون أكبر من صفر.",
+      "discountType": "نوع الخصم مطلوب.",
+      "discountValue": "قيمة الخصم مطلوبة ويجب أن تكون أكبر من صفر.",
+      "percentageDiscount": "نسبة الخصم لا يمكن أن تتجاوز 100.",
+      "fixedDiscountTooHigh": "الخصم الثابت لا يمكن أن يجعل السعر النهائي صفراً أو أقل."
     }
   },
   "logout": {

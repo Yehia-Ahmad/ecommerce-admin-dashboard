@@ -1,13 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
 
-import { TranslationService } from './translation.service';
+import { LanguageService } from './translation.service';
 
-describe('TranslationService', () => {
-  let service: TranslationService;
+describe('LanguageService', () => {
+  let service: LanguageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(TranslationService);
+    localStorage.clear();
+    TestBed.configureTestingModule({
+      providers: [provideTranslateService()]
+    });
+    service = TestBed.inject(LanguageService);
   });
 
   it('should be created', () => {

@@ -1,0 +1,292 @@
+<form class="grid gap-5" [formGroup]="form" (ngSubmit)="submit()">
+  <section class="grid gap-4 rounded-xl border border-[#515151] bg-[#2f2f2f] p-4">
+    <div>
+      <h2 class="m-0 font-azonix text-lg text-orange">
+        {{ 'bundles.form.sections.basic' | translate }}
+      </h2>
+      <p class="mt-1 text-sm text-[#bdbdbd]">{{ 'bundles.form.editWarning' | translate }}</p>
+    </div>
+
+    <div class="grid gap-4 xl:grid-cols-[minmax(0,1fr)_18rem]">
+      <div class="grid gap-4">
+        <label class="grid gap-2 font-bold text-light_orange">
+          <span>{{ 'bundles.fields.name' | translate }}</span>
+          <input pInputText [class]="primeInputClass" formControlName="name" type="text" />
+          @if (errorFor('name')) {
+            <small class="text-red-300">{{ errorFor('name') | translate }}</small>
+          }
+        </label>
+
+        <label class="grid gap-2 font-bold text-light_orange">
+          <span>{{ 'bundles.fields.description' | translate }}</span>
+          <textarea
+            pTextarea
+            [class]="primeInputClass + ' min-h-28 resize-y'"
+            formControlName="description"
+            rows="4"
+          ></textarea>
+        </label>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="grid gap-2 font-bold text-light_orange">
+            <span>{{ 'bundles.fields.startDate' | translate }}</span>
+            <p-datepicker
+              formControlName="startDate"
+              [showIcon]="true"
+              iconDisplay="input"
+              appendTo="body"
+              styleClass="w-full"
+              [inputStyleClass]="primeInputClass"
+            />
+          </label>
+
+          <label class="grid gap-2 font-bold text-light_orange">
+            <span>{{ 'bundles.fields.endDate' | translate }}</span>
+            <p-datepicker
+              formControlName="endDate"
+              [showIcon]="true"
+              iconDisplay="input"
+              appendTo="body"
+              styleClass="w-full"
+              [inputStyleClass]="primeInputClass"
+            />
+          </label>
+        </div>
+
+        <label class="flex items-center gap-2 font-bold text-light_orange">
+          <p-checkbox formControlName="isActive" [binary]="true" inputId="bundleIsActive" />
+          <span>{{ 'bundles.fields.isActive' | translate }}</span>
+        </label>
+      </div>
+
+      <label class="grid content-start gap-3 font-bold text-light_orange">
+        <span>{{ 'bundles.fields.image' | translate }}</span>
+        <div class="grid gap-3 rounded-xl border border-dashed border-[#696969] bg-[#393939] p-3">
+          @if (imagePreview) {
+            <img class="aspect-square w-full rounded-lg object-cover" [src]="imagePreview" alt="" />
+          } @else {
+            <div
+              class="grid aspect-square place-items-center rounded-lg bg-[#242424] text-center text-sm text-[#bdbdbd]"
+            >
+              {{ 'bundles.fields.image' | translate }}
+            </div>
+          }
+          <input
+            #bundleImageInput
+            class="hidden"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            (change)="onImageSelected($event)"
+          />
+          <button
+            pButton
+            type="button"
+            class="w-full justify-center !rounded-lg !border-0 !bg-[#e1e0e0] !px-4 !py-3 !font-bold !text-gray_dark"
+            (click)="bundleImageInput.click()"
+          >
+            {{ 'bundles.actions.chooseImage' | translate }}
+          </button>
+        </div>
+        @if (errorFor('image')) {
+          <small class="text-red-300">{{ errorFor('image') | translate }}</small>
+        }
+      </label>
+    </div>
+  </section>
+
+  <section class="grid gap-4 rounded-xl border border-[#515151] bg-[#2f2f2f] p-4">
+    <div class="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+      <div>
+        <h2 class="m-0 font-azonix text-lg text-orange">
+          {{ 'bundles.form.sections.products' | translate }}
+        </h2>
+        <p class="mt-1 text-sm text-[#bdbdbd]">{{ 'bundles.form.productsHint' | translate }}</p>
+      </div>
+      <button
+        type="button"
+        class="rounded-lg bg-[#e1e0e0] px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+        (click)="openProductDialog()"
+      >
+        {{ 'bundles.actions.addProduct' | translate }}
+      </button>
+    </div>
+
+    <div formArrayName="items" class="grid gap-3">
+      @for (item of items.controls; track $index) {
+        <div
+          class="grid items-end gap-3 rounded-xl border border-[#515151] bg-[#242424] p-3 lg:grid-cols-[minmax(16rem,1fr)_minmax(12rem,.7fr)_minmax(8rem,.35fr)_auto]"
+          [formGroupName]="$index"
+        >
+          <div class="flex items-center gap-3 text-light_orange">
+            @if (productFor(item); as product) {
+              <img
+                class="h-20 w-20 rounded-lg bg-black object-cover"
+                [src]="product.image || 'assets/img/Kapo.jpeg'"
+                [alt]="product.name"
+              />
+              <div class="grid gap-1">
+                <strong>{{ product.name }}</strong>
+                <span class="text-sm text-[#bdbdbd]">{{ product.sku || '-' }}</span>
+                <span class="text-sm text-[#bdbdbd]"
+                  >{{ 'bundles.productSelector.price' | translate }}:
+                  {{ selectedPrice(item) | number: '1.2-2' }}</span
+                >
+                <span class="text-sm text-[#bdbdbd]"
+                  >{{ 'bundles.productSelector.stock' | translate }}:
+                  {{ selectedStock(item) }}</span
+                >
+              </div>
+            } @else {
+              <div class="text-sm text-[#bdbdbd]">
+                {{ 'bundles.form.selectProductPrompt' | translate }}
+              </div>
+            }
+          </div>
+
+          <!-- <label class="grid gap-2 font-bold text-light_orange">
+            <span>{{ 'bundles.fields.variant' | translate }}</span>
+            <p-select
+              formControlName="variantId"
+              [options]="productFor(item)?.variants || []"
+              optionLabel="name"
+              optionValue="id"
+              appendTo="body"
+              [styleClass]="primeSelectClass"
+              [showClear]="true"
+              [placeholder]="'bundles.form.noVariant' | translate"
+              [disabled]="!productFor(item)?.variants?.length"
+            >
+              <ng-template #item let-variant>
+                {{ variant.name }} - {{ variant.price | number:'1.2-2' }} / {{ variant.stock }}
+              </ng-template>
+            </p-select>
+          </label> -->
+
+          <label class="grid gap-2 font-bold text-light_orange">
+            <span>{{ 'bundles.fields.quantity' | translate }}</span>
+            <p-inputNumber
+              formControlName="quantity"
+              [min]="1"
+              [step]="1"
+              [useGrouping]="false"
+              styleClass="w-full"
+              [inputStyleClass]="primeInputClass"
+            />
+            @if (itemError($index, 'quantity')) {
+              <small class="text-red-300">{{ itemError($index, 'quantity') | translate }}</small>
+            }
+          </label>
+
+          <button
+            type="button"
+            class="rounded-lg bg-[#991b1b] px-4 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-60"
+            (click)="removeItem($index)"
+            [attr.aria-label]="'bundles.actions.remove' | translate"
+          >
+            {{ 'bundles.actions.remove' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="grid gap-4 rounded-xl border border-[#515151] bg-[#2f2f2f] p-4">
+    <div>
+      <h2 class="m-0 font-azonix text-lg text-orange">
+        {{ 'bundles.form.sections.pricing' | translate }}
+      </h2>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <label class="grid gap-2 font-bold text-light_orange">
+        <span>{{ 'bundles.fields.pricingType' | translate }}</span>
+        <p-select
+          [options]="pricingTypeOptions"
+          formControlName="pricingType"
+          optionLabel="label"
+          optionValue="value"
+          appendTo="body"
+          [styleClass]="primeSelectClass"
+        />
+      </label>
+
+      @if (form.controls.pricingType.value === 'fixed') {
+        <label class="grid gap-2 font-bold text-light_orange">
+          <span>{{ 'bundles.fields.fixedPrice' | translate }}</span>
+          <p-inputNumber
+            formControlName="fixedPrice"
+            [min]="0.01"
+            [minFractionDigits]="0"
+            [maxFractionDigits]="2"
+            styleClass="w-full"
+            [inputStyleClass]="primeInputClass"
+          />
+        </label>
+      } @else {
+        <label class="grid gap-2 font-bold text-light_orange">
+          <span>{{ 'bundles.fields.discountType' | translate }}</span>
+          <p-select
+            [options]="discountTypeOptions"
+            formControlName="discountType"
+            optionLabel="label"
+            optionValue="value"
+            appendTo="body"
+            [styleClass]="primeSelectClass"
+          />
+        </label>
+
+        <label class="grid gap-2 font-bold text-light_orange">
+          <span>{{ 'bundles.fields.discountValue' | translate }}</span>
+          <p-inputNumber
+            formControlName="discountValue"
+            [min]="0.01"
+            [minFractionDigits]="0"
+            [maxFractionDigits]="2"
+            styleClass="w-full"
+            [inputStyleClass]="primeInputClass"
+          />
+        </label>
+      }
+    </div>
+  </section>
+
+  @if (formError()) {
+    <p class="form-error text-red-300">{{ formError() | translate }}</p>
+  }
+
+  <div class="grid gap-4 lg:grid-cols-2">
+    <app-bundle-price-preview [preview]="pricePreview"></app-bundle-price-preview>
+    <app-bundle-stock-preview [preview]="stockPreview"></app-bundle-stock-preview>
+  </div>
+
+  <div class="sticky bottom-0 flex justify-end gap-3 bg-inherit py-4">
+    <button
+      type="button"
+      class="rounded-lg bg-[#e1e0e0] px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+      (click)="cancel.emit()"
+      [disabled]="isSubmitting"
+    >
+      {{ 'actions.cancelButton' | translate }}
+    </button>
+    <button
+      type="submit"
+      class="rounded-lg bg-orange px-4 py-3 font-bold text-gray_dark disabled:cursor-not-allowed disabled:opacity-60"
+      [disabled]="isSubmitting"
+    >
+      {{
+        (isSubmitting
+          ? 'actions.loading'
+          : mode === 'create'
+            ? 'bundles.actions.create'
+            : 'bundles.actions.save'
+        ) | translate
+      }}
+    </button>
+  </div>
+</form>
+
+<app-bundle-product-selector-dialog
+  [(visible)]="productDialogVisible"
+  [disabledProductIds]="disabledProductIds"
+  (productSelected)="addSelectedProduct($event)"
+></app-bundle-product-selector-dialog>
