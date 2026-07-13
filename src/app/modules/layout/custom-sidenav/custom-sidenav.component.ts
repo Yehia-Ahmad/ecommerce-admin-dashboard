@@ -353,6 +353,11 @@ export class CustomSidenavComponent implements OnInit {
         route: '/website-images'
       },
       {
+        label: 'sidebarTitles.website_header',
+        icon: this.navIcon('M4 5h16v14H4V5zm2 2v2h12V7H6zm0 5v6h12v-6H6zm2 2h5v2H8v-2z'),
+        route: '/settings/website-header'
+      },
+      {
         label: 'sidebarTitles.categories',
         icon: this.sanitize(`
         <span class="block w-8 h-8">
@@ -406,7 +411,9 @@ export class CustomSidenavComponent implements OnInit {
   }
 
   private isWebsiteSettingsRoute(): boolean {
-    return this._router.url.includes('/ecommerce-settings') || this._router.url.includes('/website-images');
+    return this._router.url.includes('/ecommerce-settings')
+      || this._router.url.includes('/website-images')
+      || this._router.url.includes('/settings/website-header');
   }
 
   private isReportsRoute(): boolean {
@@ -479,6 +486,11 @@ export class CustomSidenavComponent implements OnInit {
         label: 'sidebarTitles.website_images',
         icon: this.navIcon('M4 5h16v14H4V5zm2 2v8l3-3 3 3 4-5 2 3V7H6z'),
         route: '/website-images'
+      },
+      {
+        label: 'sidebarTitles.website_header',
+        icon: this.navIcon('M4 5h16v14H4V5zm2 2v2h12V7H6zm0 5v6h12v-6H6zm2 2h5v2H8v-2z'),
+        route: '/settings/website-header'
       }
     ];
   }

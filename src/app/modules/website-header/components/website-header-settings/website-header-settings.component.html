@@ -1,0 +1,1034 @@
+<app-side-nav>
+  <div
+    class="min-h-[calc(100vh-8rem)]"
+    [ngClass]="(isDarkMode$ | async) ? 'bg-gray-900 text-light_orange' : 'bg-light_bg text-dark'"
+  >
+    <div class="mb-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+      <div>
+        <p class="mb-1 text-xs font-extrabold uppercase tracking-wide text-orange">
+          {{ 'websiteHeader.eyebrow' | translate }}
+        </p>
+        <h1 class="m-0 font-azonix text-azonix-display leading-tight">
+          {{ 'websiteHeader.title' | translate }}
+        </h1>
+        <p
+          class="m-0 text-sm"
+          [ngClass]="(isDarkMode$ | async) ? 'text-light_gray' : 'text-gray-600'"
+        >
+          {{ 'websiteHeader.subtitle' | translate }}
+        </p>
+      </div>
+      <button
+        type="button"
+        class="rounded-lg bg-orange px-5 py-2 font-extrabold text-dark disabled:cursor-not-allowed disabled:opacity-60"
+        [disabled]="form.invalid || isSaving || isLoading || !hasUnsavedChanges()"
+        (click)="save()"
+      >
+        {{
+          (isSaving ? 'websiteHeader.actions.saving' : 'websiteHeader.actions.saveHeader')
+            | translate
+        }}
+      </button>
+    </div>
+
+    <div
+      class="mb-4 flex flex-wrap gap-2 rounded-lg border p-2"
+      [ngClass]="(isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'"
+    >
+      @for (section of sectionOptions; track section.id) {
+        <button
+          type="button"
+          class="rounded-lg px-4 py-2 text-sm font-extrabold transition"
+          [ngClass]="activeSection === section.id ? 'bg-orange text-dark' : 'bg-transparent'"
+          (click)="setSection(section.id)"
+        >
+          {{ section.label | translate }}
+        </button>
+      }
+    </div>
+
+    @if (isLoading) {
+      <section
+        class="grid gap-3 rounded-lg border p-4"
+        [ngClass]="(isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'"
+      >
+        <div class="h-5 w-48 animate-pulse rounded bg-gray-300"></div>
+        <div class="h-11 animate-pulse rounded bg-gray-200"></div>
+        <div class="h-11 animate-pulse rounded bg-gray-200"></div>
+        <div class="h-32 animate-pulse rounded bg-gray-200"></div>
+      </section>
+    } @else {
+      <form [formGroup]="form" class="grid gap-4" (ngSubmit)="save()">
+        @if (activeSection === 'general') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            formGroupName="settings"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <h2 class="m-0 font-azonix text-azonix-title">
+              {{ 'websiteHeader.sections.general' | translate }}
+            </h2>
+            <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              @for (
+                item of [
+                  ['isEnabled', 'websiteHeader.general.enableHeader'],
+                  ['isSticky', 'websiteHeader.general.stickyHeader'],
+                  ['showTopBar', 'websiteHeader.general.showTopBar'],
+                  ['showMainHeader', 'websiteHeader.general.showMainHeader'],
+                  ['showNavigation', 'websiteHeader.general.showNavigation'],
+                  ['showSearch', 'websiteHeader.general.showSearch'],
+                  ['showCart', 'websiteHeader.general.showCart'],
+                  ['showWishlist', 'websiteHeader.general.showWishlist'],
+                  ['showAccount', 'websiteHeader.general.showAccount'],
+                  ['showLanguageSwitcher', 'websiteHeader.general.showLanguageSwitcher'],
+                  ['showMobileMenu', 'websiteHeader.general.showMobileMenu'],
+                ];
+                track item[0]
+              ) {
+                <label
+                  class="flex items-center gap-3 rounded-lg border p-3"
+                  [ngClass]="
+                    (isDarkMode$ | async)
+                      ? 'border-gray bg-dark'
+                      : 'border-gray-200 bg-light_content'
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    class="h-4 w-4 accent-orange"
+                    [formControlName]="item[0]"
+                  />
+                  <span class="font-bold">{{ item[1] | translate }}</span>
+                </label>
+              }
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'branding') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            formGroupName="branding"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <h2 class="m-0 font-azonix text-azonix-title">
+              {{ 'websiteHeader.sections.branding' | translate }}
+            </h2>
+            <div class="grid gap-4 lg:grid-cols-2">
+              <div
+                class="grid gap-3 rounded-lg border p-4"
+                [ngClass]="
+                  (isDarkMode$ | async) ? 'border-gray bg-dark' : 'border-gray-200 bg-light_content'
+                "
+              >
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.desktopLogo' | translate
+                }}</span>
+                @if (form.controls.branding.controls.desktopLogo.value) {
+                  <img
+                    [src]="form.controls.branding.controls.desktopLogo.value"
+                    [alt]="'websiteHeader.branding.desktopLogoPreview' | translate"
+                    class="h-28 max-w-full object-contain"
+                  />
+                } @else {
+                  <div
+                    class="grid h-28 place-items-center rounded-lg border border-dashed border-gray-300 text-sm opacity-70"
+                  >
+                    {{ 'websiteHeader.branding.noDesktopLogo' | translate }}
+                  </div>
+                }
+                <div class="flex flex-wrap gap-2">
+                  <label
+                    class="cursor-pointer rounded-lg border border-orange px-4 py-2 font-extrabold text-orange"
+                  >
+                    {{ 'websiteHeader.actions.replace' | translate }}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="sr-only"
+                      (change)="onLogoSelected($event, 'desktopLogo')"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    class="rounded-lg border border-red px-4 py-2 font-extrabold text-red"
+                    (click)="removeLogo('desktopLogo')"
+                  >
+                    {{ 'websiteHeader.actions.remove' | translate }}
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="grid gap-3 rounded-lg border p-4"
+                [ngClass]="
+                  (isDarkMode$ | async) ? 'border-gray bg-dark' : 'border-gray-200 bg-light_content'
+                "
+              >
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.mobileLogo' | translate
+                }}</span>
+                @if (form.controls.branding.controls.mobileLogo.value) {
+                  <img
+                    [src]="form.controls.branding.controls.mobileLogo.value"
+                    [alt]="'websiteHeader.branding.mobileLogoPreview' | translate"
+                    class="h-28 max-w-full object-contain"
+                  />
+                } @else {
+                  <div
+                    class="grid h-28 place-items-center rounded-lg border border-dashed border-gray-300 text-sm opacity-70"
+                  >
+                    {{ 'websiteHeader.branding.noMobileLogo' | translate }}
+                  </div>
+                }
+                <div class="flex flex-wrap gap-2">
+                  <label
+                    class="cursor-pointer rounded-lg border border-orange px-4 py-2 font-extrabold text-orange"
+                  >
+                    {{ 'websiteHeader.actions.replace' | translate }}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="sr-only"
+                      (change)="onLogoSelected($event, 'mobileLogo')"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    class="rounded-lg border border-red px-4 py-2 font-extrabold text-red"
+                    (click)="removeLogo('mobileLogo')"
+                  >
+                    {{ 'websiteHeader.actions.remove' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-4 lg:grid-cols-2" formGroupName="logoAlt">
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.logoAltEn' | translate
+                }}</span>
+                <input type="text" formControlName="en" class="input-field" />
+              </label>
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.logoAltAr' | translate
+                }}</span>
+                <input type="text" dir="rtl" formControlName="ar" class="input-field" />
+              </label>
+            </div>
+
+            <div class="grid gap-4 lg:grid-cols-3">
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.logoWidth' | translate
+                }}</span>
+                <input type="number" min="24" formControlName="logoWidth" class="input-field" />
+              </label>
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.logoHeight' | translate
+                }}</span>
+                <input type="number" min="16" formControlName="logoHeight" class="input-field" />
+              </label>
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.branding.homeUrl' | translate
+                }}</span>
+                <input type="text" formControlName="homeUrl" class="input-field" />
+                @if (
+                  form.controls.branding.controls.homeUrl.touched &&
+                  form.controls.branding.controls.homeUrl.invalid
+                ) {
+                  <small class="text-red">{{
+                    'websiteHeader.validation.pathOrUrl' | translate
+                  }}</small>
+                }
+              </label>
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'topBar') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            formGroupName="topBar"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <h2 class="m-0 font-azonix text-azonix-title">
+              {{ 'websiteHeader.sections.topBar' | translate }}
+            </h2>
+            <div class="grid gap-4 lg:grid-cols-2" formGroupName="text">
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.textEn' | translate
+                }}</span
+                ><input type="text" formControlName="en" class="input-field"
+              /></label>
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.textAr' | translate
+                }}</span
+                ><input type="text" dir="rtl" formControlName="ar" class="input-field"
+              /></label>
+            </div>
+            <div class="grid gap-4 lg:grid-cols-2" formGroupName="linkLabel">
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.linkLabelEn' | translate
+                }}</span
+                ><input type="text" formControlName="en" class="input-field"
+              /></label>
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.linkLabelAr' | translate
+                }}</span
+                ><input type="text" dir="rtl" formControlName="ar" class="input-field"
+              /></label>
+            </div>
+            <div class="grid gap-4 lg:grid-cols-2">
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.linkUrl' | translate
+                }}</span>
+                <input type="text" formControlName="linkUrl" class="input-field" />
+                @if (
+                  form.controls.topBar.controls.linkUrl.touched &&
+                  form.controls.topBar.controls.linkUrl.invalid
+                ) {
+                  <small class="text-red">{{
+                    'websiteHeader.validation.pathOrUrl' | translate
+                  }}</small>
+                }
+              </label>
+              <div class="grid gap-2">
+                <label class="inline-flex items-center gap-2 font-bold"
+                  ><input
+                    type="checkbox"
+                    formControlName="openInNewTab"
+                    class="h-4 w-4 accent-orange"
+                  />
+                  {{ 'websiteHeader.common.openInNewTab' | translate }}</label
+                >
+                <label class="inline-flex items-center gap-2 font-bold"
+                  ><input
+                    type="checkbox"
+                    formControlName="dismissible"
+                    class="h-4 w-4 accent-orange"
+                  />
+                  {{ 'websiteHeader.topBar.dismissible' | translate }}</label
+                >
+              </div>
+            </div>
+            <div class="grid gap-4 lg:grid-cols-2">
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.backgroundColor' | translate
+                }}</span>
+                <span class="grid grid-cols-[4rem_minmax(0,1fr)] gap-2"
+                  ><input
+                    type="color"
+                    formControlName="backgroundColor"
+                    class="color-field" /><input
+                    type="text"
+                    formControlName="backgroundColor"
+                    class="input-field uppercase"
+                /></span>
+              </label>
+              <label class="grid gap-1">
+                <span class="text-xs font-bold">{{
+                  'websiteHeader.topBar.textColor' | translate
+                }}</span>
+                <span class="grid grid-cols-[4rem_minmax(0,1fr)] gap-2"
+                  ><input type="color" formControlName="textColor" class="color-field" /><input
+                    type="text"
+                    formControlName="textColor"
+                    class="input-field uppercase"
+                /></span>
+              </label>
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'contact') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            formGroupName="contact"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <h2 class="m-0 font-azonix text-azonix-title">
+              {{ 'websiteHeader.sections.contact' | translate }}
+            </h2>
+            <div class="grid gap-4 lg:grid-cols-2">
+              @for (
+                field of [
+                  ['phone', 'websiteHeader.contact.phone'],
+                  ['whatsapp', 'websiteHeader.contact.whatsapp'],
+                  ['email', 'websiteHeader.contact.email'],
+                  ['address', 'websiteHeader.contact.address'],
+                ];
+                track field[0]
+              ) {
+                <div
+                  class="grid gap-2 rounded-lg border p-4"
+                  [formGroupName]="field[0]"
+                  [ngClass]="
+                    (isDarkMode$ | async)
+                      ? 'border-gray bg-dark'
+                      : 'border-gray-200 bg-light_content'
+                  "
+                >
+                  <label class="grid gap-1">
+                    <span class="text-xs font-bold">{{ field[1] | translate }}</span>
+                    <input type="text" formControlName="value" class="input-field" />
+                  </label>
+                  <label class="inline-flex items-center gap-2 font-bold"
+                    ><input
+                      type="checkbox"
+                      formControlName="isVisible"
+                      class="h-4 w-4 accent-orange"
+                    />
+                    {{ 'websiteHeader.common.visible' | translate }}</label
+                  >
+                </div>
+              }
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'appearance') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            formGroupName="appearance"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <h2 class="m-0 font-azonix text-azonix-title">
+              {{ 'websiteHeader.sections.appearance' | translate }}
+            </h2>
+            <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              @for (
+                field of [
+                  ['backgroundColor', 'websiteHeader.appearance.backgroundColor'],
+                  ['textColor', 'websiteHeader.appearance.textColor'],
+                  ['iconColor', 'websiteHeader.appearance.iconColor'],
+                  ['activeColor', 'websiteHeader.appearance.activeColor'],
+                  ['hoverColor', 'websiteHeader.appearance.hoverColor'],
+                  ['borderColor', 'websiteHeader.appearance.borderColor'],
+                ];
+                track field[0]
+              ) {
+                <label class="grid gap-1">
+                  <span class="text-xs font-bold">{{ field[1] | translate }}</span>
+                  <span class="grid grid-cols-[4rem_minmax(0,1fr)] gap-2">
+                    <input type="color" [formControlName]="field[0]" class="color-field" />
+                    <input type="text" [formControlName]="field[0]" class="input-field uppercase" />
+                  </span>
+                </label>
+              }
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.appearance.desktopHeight' | translate
+                }}</span
+                ><input type="number" min="48" formControlName="desktopHeight" class="input-field"
+              /></label>
+              <label class="grid gap-1"
+                ><span class="text-xs font-bold">{{
+                  'websiteHeader.appearance.mobileHeight' | translate
+                }}</span
+                ><input type="number" min="48" formControlName="mobileHeight" class="input-field"
+              /></label>
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'navigation') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 class="m-0 font-azonix text-azonix-title">
+                  {{ 'websiteHeader.sections.navigation' | translate }}
+                </h2>
+                <p class="m-0 text-sm opacity-70">
+                  {{ 'websiteHeader.navigation.hint' | translate }}
+                </p>
+              </div>
+              <button
+                type="button"
+                class="rounded-lg bg-orange px-4 py-2 font-extrabold text-dark"
+                (click)="openCreateNavigation()"
+              >
+                {{ 'websiteHeader.navigation.add' | translate }}
+              </button>
+            </div>
+            <div class="grid gap-2">
+              @for (item of flatNavigationItems; track item.id; let index = $index) {
+                <div
+                  class="grid gap-3 rounded-lg border p-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
+                  [style.margin-inline-start.px]="item.depth * 28"
+                  [ngClass]="
+                    (isDarkMode$ | async)
+                      ? 'border-gray bg-dark'
+                      : 'border-gray-200 bg-light_content'
+                  "
+                >
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <strong>{{ labelText(item.label) }}</strong>
+                      <span
+                        class="rounded bg-light_orange px-2 py-0.5 text-xs font-bold text-dark"
+                        >{{ item.linkType }}</span
+                      >
+                      @if (!item.isEnabled) {
+                        <span
+                          class="rounded bg-gray-400 px-2 py-0.5 text-xs font-bold text-white"
+                          >{{ 'websiteHeader.common.disabled' | translate }}</span
+                        >
+                      }
+                    </div>
+                    <p class="m-0 truncate text-sm opacity-70">
+                      {{
+                        item.url ||
+                          item.referenceLabel ||
+                          item.referenceId ||
+                          ('websiteHeader.navigation.noTarget' | translate)
+                      }}
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      class="small-button"
+                      [disabled]="isSavingNavigationOrder"
+                      (click)="moveNavigation(item, -1)"
+                    >
+                      {{ 'websiteHeader.actions.up' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="small-button"
+                      [disabled]="isSavingNavigationOrder"
+                      (click)="moveNavigation(item, 1)"
+                    >
+                      {{ 'websiteHeader.actions.down' | translate }}
+                    </button>
+                    <button type="button" class="small-button" (click)="toggleNavigation(item)">
+                      {{
+                        (item.isEnabled
+                          ? 'websiteHeader.actions.disable'
+                          : 'websiteHeader.actions.enable'
+                        ) | translate
+                      }}
+                    </button>
+                    <button type="button" class="small-button" (click)="openEditNavigation(item)">
+                      {{ 'websiteHeader.actions.edit' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="small-button small-button--danger"
+                      (click)="requestDeleteNavigation(item)"
+                    >
+                      {{ 'websiteHeader.actions.delete' | translate }}
+                    </button>
+                  </div>
+                </div>
+              } @empty {
+                <p
+                  class="m-0 rounded-lg border border-dashed border-gray-300 p-6 text-center text-sm opacity-70"
+                >
+                  {{ 'websiteHeader.navigation.empty' | translate }}
+                </p>
+              }
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'actions') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 class="m-0 font-azonix text-azonix-title">
+                {{ 'websiteHeader.sections.actions' | translate }}
+              </h2>
+              <button
+                type="button"
+                class="rounded-lg bg-orange px-4 py-2 font-extrabold text-dark"
+                (click)="openCreateAction()"
+              >
+                {{ 'websiteHeader.headerActions.add' | translate }}
+              </button>
+            </div>
+            <div class="grid gap-2">
+              @for (action of actionItems; track action.id) {
+                <div
+                  class="grid gap-3 rounded-lg border p-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
+                  [ngClass]="
+                    (isDarkMode$ | async)
+                      ? 'border-gray bg-dark'
+                      : 'border-gray-200 bg-light_content'
+                  "
+                >
+                  <div>
+                    <strong>{{ labelText(action.label) }}</strong>
+                    <p class="m-0 text-sm opacity-70">{{ action.icon }} · {{ action.url }}</p>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      class="small-button"
+                      [disabled]="isSavingActionOrder"
+                      (click)="moveAction(action, -1)"
+                    >
+                      {{ 'websiteHeader.actions.up' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="small-button"
+                      [disabled]="isSavingActionOrder"
+                      (click)="moveAction(action, 1)"
+                    >
+                      {{ 'websiteHeader.actions.down' | translate }}
+                    </button>
+                    <button type="button" class="small-button" (click)="toggleAction(action)">
+                      {{
+                        (action.isEnabled
+                          ? 'websiteHeader.actions.disable'
+                          : 'websiteHeader.actions.enable'
+                        ) | translate
+                      }}
+                    </button>
+                    <button type="button" class="small-button" (click)="openEditAction(action)">
+                      {{ 'websiteHeader.actions.edit' | translate }}
+                    </button>
+                    <button
+                      type="button"
+                      class="small-button small-button--danger"
+                      (click)="requestDeleteAction(action)"
+                    >
+                      {{ 'websiteHeader.actions.delete' | translate }}
+                    </button>
+                  </div>
+                </div>
+              } @empty {
+                <p
+                  class="m-0 rounded-lg border border-dashed border-gray-300 p-6 text-center text-sm opacity-70"
+                >
+                  {{ 'websiteHeader.headerActions.empty' | translate }}
+                </p>
+              }
+            </div>
+          </section>
+        }
+
+        @if (activeSection === 'preview') {
+          <section
+            class="grid gap-4 rounded-lg border p-4"
+            [ngClass]="
+              (isDarkMode$ | async) ? 'border-gray bg-gray_dark' : 'border-gray-200 bg-white'
+            "
+          >
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h2 class="m-0 font-azonix text-azonix-title">
+                {{ 'websiteHeader.sections.preview' | translate }}
+              </h2>
+              <div class="flex gap-2">
+                @for (mode of ['desktop', 'tablet', 'mobile']; track mode) {
+                  <button
+                    type="button"
+                    class="small-button"
+                    [class.small-button--active]="previewMode === mode"
+                    (click)="previewMode = $any(mode)"
+                  >
+                    {{ 'websiteHeader.preview.modes.' + mode | translate }}
+                  </button>
+                }
+              </div>
+            </div>
+            <div class="header-preview">
+              <div [class]="previewFrameClass" [ngStyle]="previewStyle">
+                @if (previewConfig.settings.isEnabled) {
+                  <header
+                    class="preview-header"
+                    [class.preview-header--sticky]="previewConfig.settings.isSticky"
+                  >
+                    @if (previewConfig.settings.showTopBar) {
+                      <div
+                        class="preview-topbar"
+                        [style.background]="previewConfig.topBar.backgroundColor"
+                        [style.color]="previewConfig.topBar.textColor"
+                      >
+                        <span>{{
+                          previewConfig.topBar.text.en ||
+                            ('websiteHeader.preview.topBarText' | translate)
+                        }}</span>
+                        @if (previewConfig.topBar.linkLabel.en) {
+                          <a>{{ previewConfig.topBar.linkLabel.en }}</a>
+                        }
+                        @if (previewConfig.topBar.dismissible) {
+                          <button
+                            type="button"
+                            [attr.aria-label]="'websiteHeader.preview.dismissTopBar' | translate"
+                          >
+                            ×
+                          </button>
+                        }
+                      </div>
+                    }
+                    @if (previewConfig.settings.showMainHeader) {
+                      <div class="preview-main">
+                        <a class="preview-logo">
+                          @if (imageForPreview()) {
+                            <img
+                              [src]="imageForPreview()"
+                              [alt]="previewConfig.branding.logoAlt.en"
+                              [style.width.px]="previewConfig.branding.logoWidth"
+                              [style.height.px]="previewConfig.branding.logoHeight"
+                            />
+                          } @else {
+                            <span>{{ 'websiteHeader.preview.logo' | translate }}</span>
+                          }
+                        </a>
+                        @if (previewConfig.settings.showNavigation && previewMode !== 'mobile') {
+                          <nav
+                            class="preview-nav"
+                            [attr.aria-label]="'websiteHeader.preview.navigationAria' | translate"
+                          >
+                            @for (
+                              item of enabledNavigation(previewConfig.navigation);
+                              track item.id
+                            ) {
+                              <div class="preview-nav__item">
+                                <span>{{ labelText(item.label) }}</span>
+                                @if (enabledNavigation(item.children).length) {
+                                  <div class="preview-dropdown">
+                                    @for (
+                                      child of enabledNavigation(item.children);
+                                      track child.id
+                                    ) {
+                                      <span>{{ labelText(child.label) }}</span>
+                                    }
+                                  </div>
+                                }
+                              </div>
+                            }
+                          </nav>
+                        }
+                        <div class="preview-icons">
+                          @if (previewConfig.settings.showSearch) {
+                            <button
+                              type="button"
+                              [attr.aria-label]="'websiteHeader.preview.search' | translate"
+                            >
+                              ⌕
+                            </button>
+                          }
+                          @if (previewConfig.settings.showWishlist) {
+                            <button
+                              type="button"
+                              [attr.aria-label]="'websiteHeader.preview.wishlist' | translate"
+                            >
+                              ♡
+                            </button>
+                          }
+                          @if (previewConfig.settings.showCart) {
+                            <button
+                              type="button"
+                              [attr.aria-label]="'websiteHeader.preview.cart' | translate"
+                            >
+                              🛒
+                            </button>
+                          }
+                          @if (previewConfig.settings.showAccount) {
+                            <button
+                              type="button"
+                              [attr.aria-label]="'websiteHeader.preview.account' | translate"
+                            >
+                              ◎
+                            </button>
+                          }
+                          @for (action of previewConfig.actions; track action.id) {
+                            @if (action.isEnabled) {
+                              <button type="button">
+                                {{ action.icon || labelText(action.label) }}
+                              </button>
+                            }
+                          }
+                          @if (previewConfig.settings.showMobileMenu && previewMode === 'mobile') {
+                            <button
+                              type="button"
+                              [attr.aria-label]="'websiteHeader.preview.menu' | translate"
+                            >
+                              ☰
+                            </button>
+                          }
+                        </div>
+                      </div>
+                    }
+                  </header>
+                } @else {
+                  <div class="grid min-h-40 place-items-center text-sm opacity-70">
+                    {{ 'websiteHeader.preview.headerDisabled' | translate }}
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+      </form>
+    }
+  </div>
+</app-side-nav>
+
+<p-dialog
+  [(visible)]="navigationDialogVisible"
+  [modal]="true"
+  [style]="{ width: 'min(46rem, 94vw)' }"
+  styleClass="!border-0"
+>
+  <form
+    class="grid gap-4 rounded-2xl bg-[#393939] p-6 text-light_orange"
+    [formGroup]="navigationForm"
+    (ngSubmit)="saveNavigationItem()"
+  >
+    <h2 class="m-0 font-azonix text-2xl text-orange">
+      {{
+        (editingNavigationId
+          ? 'websiteHeader.navigation.editTitle'
+          : 'websiteHeader.navigation.addTitle'
+        ) | translate
+      }}
+    </h2>
+    <div class="grid gap-3 lg:grid-cols-2" formGroupName="label">
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.labelEn' | translate }}</span
+        ><input type="text" formControlName="en" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.labelAr' | translate }}</span
+        ><input type="text" dir="rtl" formControlName="ar" class="dialog-input"
+      /></label>
+    </div>
+    <div class="grid gap-3 lg:grid-cols-2">
+      <label class="grid gap-1">
+        <span class="text-xs font-bold">{{ 'websiteHeader.navigation.linkType' | translate }}</span>
+        <p-select
+          [options]="linkTypeOptions"
+          formControlName="linkType"
+          optionLabel="label"
+          optionValue="value"
+          appendTo="body"
+          (onChange)="onNavigationLinkTypeChanged()"
+        ></p-select>
+      </label>
+      <label class="grid gap-1">
+        <span class="text-xs font-bold">{{ 'websiteHeader.navigation.parent' | translate }}</span>
+        <p-select
+          [options]="parentOptions"
+          formControlName="parentId"
+          optionLabel="label"
+          optionValue="value"
+          appendTo="body"
+        ></p-select>
+      </label>
+    </div>
+    @if (navigationForm.controls.linkType.value === 'custom') {
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.url' | translate }}</span
+        ><input type="text" formControlName="url" class="dialog-input"
+      /></label>
+    } @else {
+      <label class="grid gap-1">
+        <span class="text-xs font-bold">{{
+          'websiteHeader.navigation.reference' | translate
+        }}</span>
+        <p-select
+          [options]="selectedReferenceOptions"
+          formControlName="referenceId"
+          optionLabel="label"
+          optionValue="id"
+          appendTo="body"
+          [filter]="true"
+          (onChange)="onReferenceChanged($event.value)"
+        ></p-select>
+      </label>
+    }
+    <div class="grid gap-3 lg:grid-cols-3">
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.icon' | translate }}</span
+        ><input type="text" formControlName="icon" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.sortOrder' | translate }}</span
+        ><input type="number" formControlName="sortOrder" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.navigation.image' | translate }}</span
+        ><input type="text" formControlName="image" class="dialog-input"
+      /></label>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <label class="inline-flex items-center gap-2 font-bold"
+        ><input type="checkbox" formControlName="openInNewTab" class="h-4 w-4 accent-orange" />
+        {{ 'websiteHeader.common.openInNewTab' | translate }}</label
+      >
+      <label class="inline-flex items-center gap-2 font-bold"
+        ><input type="checkbox" formControlName="isEnabled" class="h-4 w-4 accent-orange" />
+        {{ 'websiteHeader.common.enabled' | translate }}</label
+      >
+    </div>
+    <div class="flex justify-end gap-2">
+      <button
+        type="button"
+        class="rounded-lg border border-white/30 px-4 py-2 font-bold"
+        (click)="navigationDialogVisible = false"
+      >
+        {{ 'websiteHeader.actions.cancel' | translate }}
+      </button>
+      <button type="submit" class="rounded-lg bg-orange px-4 py-2 font-bold text-dark">
+        {{ 'websiteHeader.actions.save' | translate }}
+      </button>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="actionDialogVisible"
+  [modal]="true"
+  [style]="{ width: 'min(40rem, 94vw)' }"
+  styleClass="!border-0"
+>
+  <form
+    class="grid gap-4 rounded-2xl bg-[#393939] p-6 text-light_orange"
+    [formGroup]="actionForm"
+    (ngSubmit)="saveActionItem()"
+  >
+    <h2 class="m-0 font-azonix text-2xl text-orange">
+      {{
+        (editingActionId
+          ? 'websiteHeader.headerActions.editTitle'
+          : 'websiteHeader.headerActions.addTitle'
+        ) | translate
+      }}
+    </h2>
+    <div class="grid gap-3 lg:grid-cols-2" formGroupName="label">
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.labelEn' | translate }}</span
+        ><input type="text" formControlName="en" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.labelAr' | translate }}</span
+        ><input type="text" dir="rtl" formControlName="ar" class="dialog-input"
+      /></label>
+    </div>
+    <div class="grid gap-3 lg:grid-cols-2">
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.icon' | translate }}</span
+        ><input type="text" formControlName="icon" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.url' | translate }}</span
+        ><input type="text" formControlName="url" class="dialog-input"
+      /></label>
+      <label class="grid gap-1"
+        ><span class="text-xs font-bold">{{ 'websiteHeader.common.sortOrder' | translate }}</span
+        ><input type="number" formControlName="sortOrder" class="dialog-input"
+      /></label>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <label class="inline-flex items-center gap-2 font-bold"
+        ><input type="checkbox" formControlName="openInNewTab" class="h-4 w-4 accent-orange" />
+        {{ 'websiteHeader.common.openInNewTab' | translate }}</label
+      >
+      <label class="inline-flex items-center gap-2 font-bold"
+        ><input type="checkbox" formControlName="isEnabled" class="h-4 w-4 accent-orange" />
+        {{ 'websiteHeader.common.enabled' | translate }}</label
+      >
+    </div>
+    <div class="flex justify-end gap-2">
+      <button
+        type="button"
+        class="rounded-lg border border-white/30 px-4 py-2 font-bold"
+        (click)="actionDialogVisible = false"
+      >
+        {{ 'websiteHeader.actions.cancel' | translate }}
+      </button>
+      <button type="submit" class="rounded-lg bg-orange px-4 py-2 font-bold text-dark">
+        {{ 'websiteHeader.actions.save' | translate }}
+      </button>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="confirmDialogVisible"
+  [modal]="true"
+  [style]="{ width: 'min(30rem, 94vw)' }"
+  styleClass="!border-0"
+  (onHide)="closeConfirmDialog()"
+>
+  <div class="grid gap-4 rounded-2xl bg-[#393939] p-6 text-center text-light_orange">
+    <h2 class="m-0 font-azonix text-2xl text-orange">{{ confirmTitle }}</h2>
+    <p class="m-0">{{ confirmMessage }}</p>
+    <div class="flex justify-center gap-2">
+      <button
+        type="button"
+        class="rounded-lg border border-white/30 px-4 py-2 font-bold"
+        (click)="closeConfirmDialog()"
+      >
+        {{ 'websiteHeader.actions.cancel' | translate }}
+      </button>
+      <button
+        type="button"
+        class="rounded-lg bg-red px-4 py-2 font-bold text-white"
+        (click)="runConfirmAction()"
+      >
+        {{ 'websiteHeader.actions.delete' | translate }}
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="messageVisible"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '28rem' }"
+  styleClass="!border-0"
+>
+  <div class="grid gap-4 rounded-2xl bg-[#393939] p-6 text-center text-light_orange">
+    <h3
+      class="m-0 font-azonix text-2xl"
+      [ngClass]="messageTone === 'error' ? 'text-red' : 'text-orange'"
+    >
+      {{ messageTitle }}
+    </h3>
+    <p class="m-0">{{ messageBody }}</p>
+    <button
+      type="button"
+      class="mx-auto rounded-lg bg-orange px-6 py-2 font-bold text-dark"
+      (click)="closeMessageDialog()"
+    >
+      {{ 'websiteHeader.actions.ok' | translate }}
+    </button>
+  </div>
+</p-dialog>

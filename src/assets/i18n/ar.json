@@ -20,6 +20,7 @@
     "category_import_export": "استيراد وتصدير الفئات",
     "ecommerce_settings": "إعدادات المتجر",
     "website_images": "صور الموقع",
+    "website_header": "هيدر الموقع",
     "export_products": "تصدير المنتجات",
     "addProducts": "إضافة منتجات",
     "showProducts": "عرض المنتجات",
@@ -1416,6 +1417,187 @@
       "discountValue": "قيمة الخصم مطلوبة ويجب أن تكون أكبر من صفر.",
       "percentageDiscount": "نسبة الخصم لا يمكن أن تتجاوز 100.",
       "fixedDiscountTooHigh": "الخصم الثابت لا يمكن أن يجعل السعر النهائي صفراً أو أقل."
+    }
+  },
+  "websiteHeader": {
+    "eyebrow": "إعدادات الموقع",
+    "title": "هيدر الموقع",
+    "subtitle": "تحكم في ظهور هيدر المتجر والعلامة التجارية والتنقل والإجراءات والمظهر.",
+    "sections": {
+      "general": "عام",
+      "branding": "العلامة التجارية",
+      "topBar": "الشريط العلوي",
+      "contact": "معلومات التواصل",
+      "appearance": "المظهر",
+      "navigation": "إدارة القائمة",
+      "actions": "إجراءات الهيدر",
+      "preview": "معاينة مباشرة"
+    },
+    "general": {
+      "enableHeader": "تفعيل الهيدر",
+      "stickyHeader": "هيدر ثابت",
+      "showTopBar": "عرض الشريط العلوي",
+      "showMainHeader": "عرض الهيدر الرئيسي",
+      "showNavigation": "عرض القائمة",
+      "showSearch": "عرض البحث",
+      "showCart": "عرض السلة",
+      "showWishlist": "عرض المفضلة",
+      "showAccount": "عرض الحساب",
+      "showLanguageSwitcher": "عرض مغير اللغة",
+      "showMobileMenu": "عرض قائمة الجوال"
+    },
+    "branding": {
+      "desktopLogo": "شعار سطح المكتب",
+      "mobileLogo": "شعار الجوال",
+      "desktopLogoPreview": "معاينة شعار سطح المكتب",
+      "mobileLogoPreview": "معاينة شعار الجوال",
+      "noDesktopLogo": "لا يوجد شعار لسطح المكتب",
+      "noMobileLogo": "لا يوجد شعار للجوال",
+      "logoAltEn": "النص البديل للشعار (إنجليزي)",
+      "logoAltAr": "النص البديل للشعار (عربي)",
+      "logoWidth": "عرض الشعار",
+      "logoHeight": "ارتفاع الشعار",
+      "homeUrl": "رابط الصفحة الرئيسية"
+    },
+    "topBar": {
+      "textEn": "نص الشريط العلوي (إنجليزي)",
+      "textAr": "نص الشريط العلوي (عربي)",
+      "linkLabelEn": "عنوان الرابط (إنجليزي)",
+      "linkLabelAr": "عنوان الرابط (عربي)",
+      "linkUrl": "رابط الشريط العلوي",
+      "dismissible": "قابل للإغلاق",
+      "backgroundColor": "لون الخلفية",
+      "textColor": "لون النص"
+    },
+    "contact": {
+      "phone": "رقم الهاتف",
+      "whatsapp": "رقم واتساب",
+      "email": "البريد الإلكتروني",
+      "address": "العنوان"
+    },
+    "appearance": {
+      "backgroundColor": "لون خلفية الهيدر",
+      "textColor": "لون نص الهيدر",
+      "iconColor": "لون أيقونات الهيدر",
+      "activeColor": "لون عنصر القائمة النشط",
+      "hoverColor": "لون المرور",
+      "borderColor": "لون الحدود",
+      "desktopHeight": "ارتفاع هيدر سطح المكتب",
+      "mobileHeight": "ارتفاع هيدر الجوال"
+    },
+    "navigation": {
+      "hint": "استخدم أزرار التحريك لإعادة الترتيب. العناصر الفرعية تظهر بمسافة بادئة.",
+      "add": "إضافة عنصر قائمة",
+      "addTitle": "إضافة عنصر قائمة",
+      "editTitle": "تعديل عنصر القائمة",
+      "empty": "لا توجد عناصر قائمة حتى الآن.",
+      "noTarget": "لا يوجد هدف",
+      "noParent": "بدون عنصر أب",
+      "linkType": "نوع الرابط",
+      "parent": "العنصر الأب",
+      "reference": "المرجع",
+      "image": "رابط/بيانات الصورة"
+    },
+    "headerActions": {
+      "add": "إضافة إجراء",
+      "addTitle": "إضافة إجراء",
+      "editTitle": "تعديل الإجراء",
+      "empty": "لا توجد إجراءات للهيدر حتى الآن."
+    },
+    "preview": {
+      "topBarText": "نص الشريط العلوي",
+      "dismissTopBar": "إغلاق الشريط العلوي",
+      "logo": "الشعار",
+      "navigationAria": "معاينة قائمة الهيدر",
+      "search": "بحث",
+      "wishlist": "المفضلة",
+      "cart": "السلة",
+      "account": "الحساب",
+      "menu": "القائمة",
+      "headerDisabled": "الهيدر غير مفعل",
+      "modes": {
+        "desktop": "سطح المكتب",
+        "tablet": "تابلت",
+        "mobile": "جوال"
+      }
+    },
+    "linkTypes": {
+      "custom": "رابط مخصص",
+      "category": "فئة",
+      "product": "منتج",
+      "page": "صفحة"
+    },
+    "common": {
+      "labelEn": "العنوان (إنجليزي)",
+      "labelAr": "العنوان (عربي)",
+      "url": "الرابط",
+      "icon": "الأيقونة",
+      "sortOrder": "ترتيب العرض",
+      "openInNewTab": "فتح في تبويب جديد",
+      "enabled": "مفعل",
+      "disabled": "معطل",
+      "visible": "ظاهر",
+      "untitled": "بدون عنوان"
+    },
+    "actions": {
+      "saveHeader": "حفظ الهيدر",
+      "saving": "جاري الحفظ...",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "delete": "حذف",
+      "edit": "تعديل",
+      "enable": "تفعيل",
+      "disable": "تعطيل",
+      "up": "أعلى",
+      "down": "أسفل",
+      "replace": "استبدال",
+      "remove": "إزالة",
+      "ok": "موافق"
+    },
+    "validation": {
+      "pathOrUrl": "أدخل مساراً أو رابطاً."
+    },
+    "dialog": {
+      "deleteMenuTitle": "حذف عنصر القائمة",
+      "deleteMenuMessage": "هل تريد حذف هذا العنصر والعناصر الفرعية داخله؟",
+      "deleteActionTitle": "حذف الإجراء",
+      "deleteActionMessage": "هل تريد حذف إجراء الهيدر هذا؟"
+    },
+    "messages": {
+      "loadFailedTitle": "فشل التحميل",
+      "loadFailed": "تعذر تحميل إعدادات الهيدر. سيتم عرض القيم الافتراضية.",
+      "savedTitle": "تم الحفظ",
+      "saveFailedTitle": "فشل الحفظ",
+      "settingsSaveFailed": "تعذر حفظ إعدادات هيدر الموقع.",
+      "invalidImageTitle": "صورة غير صالحة",
+      "invalidImage": "اختر ملف صورة صالحاً.",
+      "uploadFailedTitle": "فشل الرفع",
+      "imageReadFailed": "تعذرت قراءة الصورة المحددة.",
+      "logoUploadedTitle": "تم رفع الشعار",
+      "logoUploaded": "تم رفع شعار الهيدر بنجاح.",
+      "logoUploadFailed": "تعذر رفع شعار الهيدر.",
+      "logoRemovedTitle": "تم حذف الشعار",
+      "logoRemoved": "تم حذف شعار الهيدر بنجاح.",
+      "removeFailedTitle": "فشل الحذف",
+      "logoRemoveFailed": "تعذر حذف شعار الهيدر.",
+      "createdTitle": "تم الإنشاء",
+      "deletedTitle": "تم الحذف",
+      "deleteFailedTitle": "فشل الحذف",
+      "statusFailedTitle": "فشل تغيير الحالة",
+      "reorderFailedTitle": "فشل إعادة الترتيب",
+      "menuSaved": "تم حفظ عنصر القائمة بنجاح.",
+      "menuCreated": "تم إنشاء عنصر القائمة بنجاح.",
+      "menuDeleted": "تم حذف عنصر القائمة بنجاح.",
+      "menuSaveFailed": "تعذر حفظ عنصر القائمة.",
+      "menuDeleteFailed": "تعذر حذف عنصر القائمة.",
+      "menuStatusFailed": "تعذر حفظ حالة عنصر القائمة.",
+      "menuReorderFailed": "تعذر حفظ ترتيب القائمة.",
+      "actionSaved": "تم حفظ إجراء الهيدر بنجاح.",
+      "actionCreated": "تم إنشاء إجراء الهيدر بنجاح.",
+      "actionDeleted": "تم حذف إجراء الهيدر بنجاح.",
+      "actionSaveFailed": "تعذر حفظ إجراء الهيدر.",
+      "actionDeleteFailed": "تعذر حذف إجراء الهيدر.",
+      "actionReorderFailed": "تعذر حفظ ترتيب الإجراءات."
     }
   },
   "logout": {

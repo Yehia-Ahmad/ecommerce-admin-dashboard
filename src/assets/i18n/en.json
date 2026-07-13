@@ -20,6 +20,7 @@
         "category_import_export": "Category Import/Export",
         "ecommerce_settings": "E-commerce Settings",
         "website_images": "Website Images",
+        "website_header": "Website Header",
         "export_products": "Export Products",
         "addProducts": "Add Products",
         "showProducts": "Show Products",
@@ -1413,6 +1414,187 @@
             "discountValue": "Discount value is required and must be greater than zero.",
             "percentageDiscount": "Percentage discount cannot exceed 100.",
             "fixedDiscountTooHigh": "Fixed discount cannot make the final price zero or negative."
+        }
+    },
+    "websiteHeader": {
+        "eyebrow": "Website Settings",
+        "title": "Website Header",
+        "subtitle": "Configure storefront header visibility, branding, navigation, actions, and appearance.",
+        "sections": {
+            "general": "General",
+            "branding": "Branding",
+            "topBar": "Top Bar",
+            "contact": "Contact Information",
+            "appearance": "Appearance",
+            "navigation": "Navigation Builder",
+            "actions": "Header Actions",
+            "preview": "Live Preview"
+        },
+        "general": {
+            "enableHeader": "Enable header",
+            "stickyHeader": "Sticky header",
+            "showTopBar": "Show top bar",
+            "showMainHeader": "Show main header",
+            "showNavigation": "Show navigation",
+            "showSearch": "Show search",
+            "showCart": "Show cart",
+            "showWishlist": "Show wishlist",
+            "showAccount": "Show account",
+            "showLanguageSwitcher": "Show language switcher",
+            "showMobileMenu": "Show mobile menu"
+        },
+        "branding": {
+            "desktopLogo": "Desktop logo",
+            "mobileLogo": "Mobile logo",
+            "desktopLogoPreview": "Desktop logo preview",
+            "mobileLogoPreview": "Mobile logo preview",
+            "noDesktopLogo": "No desktop logo",
+            "noMobileLogo": "No mobile logo",
+            "logoAltEn": "Logo alt text (English)",
+            "logoAltAr": "Logo alt text (Arabic)",
+            "logoWidth": "Logo width",
+            "logoHeight": "Logo height",
+            "homeUrl": "Home URL"
+        },
+        "topBar": {
+            "textEn": "Top bar text (English)",
+            "textAr": "Top bar text (Arabic)",
+            "linkLabelEn": "Link label (English)",
+            "linkLabelAr": "Link label (Arabic)",
+            "linkUrl": "Link URL",
+            "dismissible": "Dismissible",
+            "backgroundColor": "Background color",
+            "textColor": "Text color"
+        },
+        "contact": {
+            "phone": "Phone number",
+            "whatsapp": "WhatsApp number",
+            "email": "Email",
+            "address": "Address"
+        },
+        "appearance": {
+            "backgroundColor": "Header background color",
+            "textColor": "Header text color",
+            "iconColor": "Header icon color",
+            "activeColor": "Active navigation item color",
+            "hoverColor": "Hover color",
+            "borderColor": "Border color",
+            "desktopHeight": "Desktop header height",
+            "mobileHeight": "Mobile header height"
+        },
+        "navigation": {
+            "hint": "Use move controls to reorder. Child items are indented.",
+            "add": "Add menu item",
+            "addTitle": "Add menu item",
+            "editTitle": "Edit menu item",
+            "empty": "No navigation items yet.",
+            "noTarget": "No target",
+            "noParent": "No parent",
+            "linkType": "Link type",
+            "parent": "Parent",
+            "reference": "Reference",
+            "image": "Image URL/base64"
+        },
+        "headerActions": {
+            "add": "Add action",
+            "addTitle": "Add action",
+            "editTitle": "Edit action",
+            "empty": "No header actions yet."
+        },
+        "preview": {
+            "topBarText": "Top bar text",
+            "dismissTopBar": "Dismiss top bar",
+            "logo": "LOGO",
+            "navigationAria": "Header preview navigation",
+            "search": "Search",
+            "wishlist": "Wishlist",
+            "cart": "Cart",
+            "account": "Account",
+            "menu": "Menu",
+            "headerDisabled": "Header disabled",
+            "modes": {
+                "desktop": "Desktop",
+                "tablet": "Tablet",
+                "mobile": "Mobile"
+            }
+        },
+        "linkTypes": {
+            "custom": "Custom link",
+            "category": "Category",
+            "product": "Product",
+            "page": "Page"
+        },
+        "common": {
+            "labelEn": "Label (English)",
+            "labelAr": "Label (Arabic)",
+            "url": "URL",
+            "icon": "Icon",
+            "sortOrder": "Sort order",
+            "openInNewTab": "Open in new tab",
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "visible": "Visible",
+            "untitled": "Untitled"
+        },
+        "actions": {
+            "saveHeader": "Save Header",
+            "saving": "Saving...",
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "edit": "Edit",
+            "enable": "Enable",
+            "disable": "Disable",
+            "up": "Up",
+            "down": "Down",
+            "replace": "Replace",
+            "remove": "Remove",
+            "ok": "OK"
+        },
+        "validation": {
+            "pathOrUrl": "Enter a path or URL."
+        },
+        "dialog": {
+            "deleteMenuTitle": "Delete menu item",
+            "deleteMenuMessage": "Delete this menu item and its nested children?",
+            "deleteActionTitle": "Delete action",
+            "deleteActionMessage": "Delete this header action?"
+        },
+        "messages": {
+            "loadFailedTitle": "Load failed",
+            "loadFailed": "Header settings could not be loaded. Defaults are shown.",
+            "savedTitle": "Saved",
+            "saveFailedTitle": "Save failed",
+            "settingsSaveFailed": "Website header settings could not be saved.",
+            "invalidImageTitle": "Invalid image",
+            "invalidImage": "Select a valid image file.",
+            "uploadFailedTitle": "Upload failed",
+            "imageReadFailed": "The selected image could not be read.",
+            "logoUploadedTitle": "Logo uploaded",
+            "logoUploaded": "Header logo uploaded successfully.",
+            "logoUploadFailed": "Header logo could not be uploaded.",
+            "logoRemovedTitle": "Logo removed",
+            "logoRemoved": "Header logo removed successfully.",
+            "removeFailedTitle": "Remove failed",
+            "logoRemoveFailed": "Header logo could not be removed.",
+            "createdTitle": "Created",
+            "deletedTitle": "Deleted",
+            "deleteFailedTitle": "Delete failed",
+            "statusFailedTitle": "Status failed",
+            "reorderFailedTitle": "Reorder failed",
+            "menuSaved": "Menu item saved successfully.",
+            "menuCreated": "Menu item created successfully.",
+            "menuDeleted": "Menu item deleted successfully.",
+            "menuSaveFailed": "Menu item could not be saved.",
+            "menuDeleteFailed": "Menu item could not be deleted.",
+            "menuStatusFailed": "Menu item status could not be saved.",
+            "menuReorderFailed": "Menu order could not be saved.",
+            "actionSaved": "Header action saved successfully.",
+            "actionCreated": "Header action created successfully.",
+            "actionDeleted": "Header action deleted successfully.",
+            "actionSaveFailed": "Header action could not be saved.",
+            "actionDeleteFailed": "Header action could not be deleted.",
+            "actionReorderFailed": "Action order could not be saved."
         }
     },
     "logout": {

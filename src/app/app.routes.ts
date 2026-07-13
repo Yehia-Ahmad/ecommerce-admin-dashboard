@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { unsavedChangesGuard } from './core/guards/unsaved-changes.guard';
 import { HomeComponent } from './modules/layout/components/home/home.component';
 
 export const routes: Routes = [
@@ -117,6 +118,12 @@ export const routes: Routes = [
     {
         path: 'website-images',
         loadComponent: () => import('./modules/website-images/components/website-images/website-images.component').then(m => m.WebsiteImagesComponent)
+    },
+    {
+        path: 'settings/website-header',
+        data: { permission: 'website-header.manage' },
+        canDeactivate: [unsavedChangesGuard],
+        loadComponent: () => import('./modules/website-header/components/website-header-settings/website-header-settings.component').then(m => m.WebsiteHeaderSettingsComponent)
     },
     {
         path: 'website-orders',
